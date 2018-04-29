@@ -1,4 +1,7 @@
 <?php
+	/**
+	 * Configuración de la conexión con la BBDD.
+	 */
 	final class Connection {
 
 		// Configuración de la conexión
