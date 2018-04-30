@@ -16,7 +16,7 @@
 	final class View {
 
 		/** Plantilla a utilizar */
-		static private $template = "";
+		static private $template = "index";
 		/** Lista de archivos a utilizar */
 		static private $files    = [];
 		/** Lista de parámetros para cada archivo */
@@ -30,7 +30,7 @@
 		static public function template($newTemplate) {
 			// Componer el nombre y la ruta de la plantilla
 			$fileName     = strtolower($newTemplate);
-			$fullFileName = Web::TEMPLATE_PATH . $fileName . ".php";
+			$fullFileName = Application::TEMPLATE_PATH . $fileName . ".php";
 
 			// Comprobar la existencia de la plantilla y gestionarla
 			if (file_exists($fullFileName))
@@ -48,7 +48,7 @@
 		static public function load($newFile, $params = []) {
 			// Componer el nombre y la ruta de la vista
 			$fileName     = strtolower($newFile);
-			$fullFileName = Web::VIEW_PATH . $fileName . ".php";
+			$fullFileName = Application::VIEW_PATH . $fileName . ".php";
 
 			// Comprobar la existencia de la plantilla y gestionarla
 			if (file_exists($fullFileName)) {
@@ -71,33 +71,37 @@
 			
 			// Cargar la plantilla
 			ob_start();
-			require_once self::$template;
-			$pageContent = ob_get_flush();
+			require_once Application::TEMPLATE_PATH . self::$template . ".php";
+			$pageContent = ob_get_contents();
 			ob_end_clean();
 
 			// Cargar el contenido de cada vista
 			foreach (self::$files as $view) {
 				// Cargar los parámetros de la vista
-				foreach (self::$params[$view] as $param => $value)
-					$$param = $value;
+				if (isset(self::$params[$view])) {
+					foreach (self::$params[$view] as $param => $value)
+						$$param = $value;
+				}
 				
 				// Cargar el contenido de la vista
 				ob_start();
 				require_once $view;
-				$currentViewContent = ob_get_flush();
+				$currentViewContent = ob_get_contents();
 				ob_end_clean();
 
 				// Sustituir el contenido de los parámetros de la vista
-				foreach (self::$params[$view] as $param => $value) {
-					str_replace("[[" . $param . "]]",   $value, $currentViewContent);
-					str_replace("[[ " . $param . " ]]", $value, $currentViewContent);
+				if (isset(self::$params[$view])) {
+					foreach (self::$params[$view] as $param => $value) {
+						$currentViewContent = str_replace("[[" . $param . "]]",   $value, $currentViewContent);
+						$currentViewContent = str_replace("[[ " . $param . " ]]", $value, $currentViewContent);
+					}
 				}
 
 				$viewContent .= $currentViewContent;
 			}
 
-			str_replace("[[forallio-content]]",   $viewContent, $pageContent);
-			str_replace("[[ forallio-content ]]", $viewContent, $pageContent);
+			$pageContent = str_replace("[[forallio-content]]",   $viewContent, $pageContent);
+			$pageContent = str_replace("[[ forallio-content ]]", $viewContent, $pageContent);
 
 			echo $pageContent;
 		}

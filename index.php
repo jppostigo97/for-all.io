@@ -4,17 +4,16 @@
 
 	// --- Carga de archivos --
 
-	// configuraciones
-	require_once "config/connection.php";
-	require_once "config/web.php";
-	// MVC
+	require_once "application.php";
+	
+	require_once "connection.php"; // configuración
+
 	require_once "View.php";
-	// Funcionamiento
-	require_once "Router.php";
+	
+	require_once "Router.php"; // funcionamiento
 
 	// --- / Carga de archivos
-
+	
 	Router::run();
-
 
 ?>

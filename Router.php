@@ -67,7 +67,7 @@
 					// Información sobre el controlador
 					$controllerName  = ucfirst(strtolower($routeArray[0]));
 					$controllerClass = $controllerName . "Controller";
-					$controllerFile  = Web::CONTROLLER_PATH . $controllerClass . ".php";
+					$controllerFile  = Application::CONTROLLER_PATH . $controllerClass . ".php";
 
 					// Buscar e incluir el archivo del controlador
 					if (file_exists($controllerFile)) {
@@ -123,7 +123,7 @@
 			$controllerClass = self::$controller . "Controller";
 			
 			try {
-				require_once Web::CONTROLLER_PATH . $controllerClass . ".php";
+				require_once Application::CONTROLLER_PATH . $controllerClass . ".php";
 				$controllerInstance = new $controllerClass;
 			} catch(Exception $e) {
 				throw new MissingControllerException(self::$controller);
@@ -137,6 +137,8 @@
 					call_user_func_array($actionArray, self::$params); // ... con parámetros
 				else
 					call_user_func($actionArray); // ... sin parámetros
+
+				View::render();
 			} catch(Exception $e) {
 				throw new BadActionScopeException(self::$action, self::$controller);
 			}

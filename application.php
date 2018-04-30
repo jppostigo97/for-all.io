@@ -1,8 +1,8 @@
 <?php
 	/**
-	 * Configuración de la aplicación web.
+	 * Configuración de la aplicación.
 	 */
-	final class Web {
+	class Application {
 		
 		// Información básica
 		static public $title       = "forAll.io";
@@ -11,7 +11,6 @@
 		// Rutas a archivos
 		public const CONTROLLER_PATH = "controllers/";
 		public const LIB_PATH        = "libs/";
-		public const MODEL_PATH      = "models/";
 		public const VIEW_PATH       = "views/";
 		public const TEMPLATE_PATH   = "templates/";
 

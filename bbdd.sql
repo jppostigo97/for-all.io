@@ -19,7 +19,7 @@ CREATE TABLE user (
 	password VARCHAR(300) NOT NULL,
 	reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	last_connection TIMESTAMP,
-	level INT NOT NULL, /* user_role */
+	level INT, /* user_role */
 	verified BIT DEFAULT 0,
 	active BIT DEFAULT 1,
 	FOREIGN KEY (level) REFERENCES user_role(id)
@@ -47,7 +47,7 @@ CREATE TABLE subforum (
 	title VARCHAR(50) NOT NULL,
 	description TEXT,
 	date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (forum) REFERENCES forum(id)
+	FOREIGN KEY (forum) REFERENCES forum(id) ON DELETE CASCADE
 );
 
 /* Hilo / Thread */
@@ -57,5 +57,5 @@ CREATE TABLE thread (
 	creator INT NOT NULL,
 	subforum INT NOT NULL,
 	FOREIGN KEY (creator) REFERENCES user(id),
-	FOREIGN KEY (subforum) REFERENCES subforum(id)
+	FOREIGN KEY (subforum) REFERENCES subforum(id) ON DELETE CASCADE
 );

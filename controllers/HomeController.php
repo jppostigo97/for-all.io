@@ -2,7 +2,7 @@
 	class HomeController {
 
 		public function index() {
-			echo "Home Controller - Index";
+			View::load("prueba");
 		}
 	}
 ?>
