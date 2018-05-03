@@ -1,0 +1,106 @@
+a {
+	color: $purple3;
+	text-decoration: none;
+
+	transition: .2s linear color;
+
+	&:hover, &:active {
+		color: $purple4;
+	}
+}
+
+.user-link {
+	border-bottom: 1px solid $white;
+	color: inherit;
+
+	transition: .2s linear border-bottom-color;
+
+	&:hover, &:active {
+		border-bottom-color: transparent;
+		color: inherit;
+	}
+}
+
+[type="button"], [type="submit"], button, .btn {
+	background: $purple1;
+	border: 0;
+	border-radius: 2px;
+	color: $white;
+	cursor: pointer;
+	padding: 8px 14px;
+
+	transition: .25s linear background;
+
+	&:hover, &:active {
+		background: $purple2;
+		color: $white;
+	}
+}
+
+input[type="text"], input[type="password"],
+input[type="email"], input[type="date"],
+input[type="number"], textarea {
+	background: $white-hard;
+	border: 0;
+	color: $black;
+	display: inline-block;
+	padding: 10px 14px;
+	resize: none;
+}
+
+nav#navbar {
+	background: $black-base;
+	border-top: 1px solid $grey-base;
+	bottom: 0;
+	left: 0;
+	//margin: 0px -16px;
+	position: fixed;
+	width: 100%;
+
+	ul {
+		display: flex;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		text-align: center;
+		width: 100%;
+
+		li {
+			//display: table-cell;
+			flex-grow: 1;
+
+			a {
+				color: $white-hard;
+				display: block;
+				padding: 12px 20px;
+
+				transition: .2s linear background;
+
+				&:hover, &:active {
+					background: $black-purple;
+				}
+
+				span:nth-child(2) {
+					display: none;
+
+					@media #{$break-lg} {
+						display: initial;
+					}
+				}
+
+			}
+		}
+	}
+
+	@media #{$break-lg} {
+		border-top: 0;
+		position: initial;
+	}
+}
+
+.error {
+	background: rgba(220, 20, 60, 0.6);
+	border-radius: 8px;
+	margin: 0px 14px;
+	padding: 10px 20px;
+}

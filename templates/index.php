@@ -1,20 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
+	<base href="<?= Router::$base ?>" />
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-	<title><?= Application::$title ?></title>
+	<title><?= Application::$tabTitle ?></title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
+	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+	<link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
 	<div id="wrapper">
-		<header>
-			<h1><?= Application::$title ?></h1>
-			<h2><?= Application::$description ?></h2>
+		<header id="header">
+
+			<hgroup id="logo">
+				<h1>
+					<?php
+						echo Application::$title . "." . Application::$subtitle;
+
+						if (empty(Application::$param)) echo "()";
+						else echo "( " . Application::$param . " )";
+					?>;
+				</h1>
+			</hgroup>
+
+			<nav id="navbar">
+				<ul>
+
+					<li>
+						<a href=".">
+							<span>
+								<i class="fas fa-fw fa-home"></i>
+							</span>
+							<span>
+								Inicio
+							</span>
+						</a>
+					</li>
+
+					<?php if (isset($_SESSION["user"])): ?>
+						<li>
+							<a href="user/profile">
+								<span>
+									<i class="fas fa-fw fa-user-circle"></i>
+								</span>
+								<span>
+									Perfil
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="user/logout">
+								<span>
+									<i class="fas fa-fw fa-sign-out-alt"></i>
+								</span>
+								<span>
+									Salir
+								</span>
+							</a>
+						</li>
+					<?php else: ?>
+						<li>
+							<a href="user/account">
+								<span>
+									<i class="fas fa-fw fa-sign-in-alt"></i>
+								</span>
+								<span>
+									Entra / Regístrate
+								</span>
+							</a>
+						</li>
+					<?php endif; ?>
+
+				</ul>
+			</nav>
 		</header>
+
 		<div id="content">
 			[[ forallio-content ]]
 		</div>
+
 	</div>
 </body>
 </html>

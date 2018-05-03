@@ -44,72 +44,59 @@
 	 */
 	final class Router {
 		
+		// Controlador y acción por defecto
+		static private $DEFAULT_CONTROLLER = "Home";
+		static private $DEFAULT_ACTION     = "index";
+
 		/** Nombre del controlador */
-		static public $controller = "Home";
+		static public $controller = "";
 		/** Nombre de la acción */
-		static public $action     = "index";
+		static public $action = "";
 		/** Parámetros */
-		static public $params     = [];
+		static public $params = [];
+		/** Ruta base */
+		static public $base = ".";
 
 		/**
 		 * Parsear la ruta y obtener la información necesaria de la misma.
 		 * 
-		 * @return true Si la acción se ha realizado correctamente.
 		 * @return null Si no hay parámetros en la URL.
 		 */
 		static public function parseUrl() {
 			if (isset($_GET["url"])) {
 				// Obtener el array de la ruta
-				$routeArray = explode("/", $_GET["url"]);
-
+				$routeArray = explode("/", filter_var(rtrim($_GET['url'], "/"), FILTER_SANITIZE_URL));
 				// Obtener el controlador en base a la URL
 				if (count($routeArray) > 0) {
 					// Información sobre el controlador
 					$controllerName  = ucfirst(strtolower($routeArray[0]));
 					$controllerClass = $controllerName . "Controller";
 					$controllerFile  = Application::CONTROLLER_PATH . $controllerClass . ".php";
-
 					// Buscar e incluir el archivo del controlador
 					if (file_exists($controllerFile)) {
-						require_once $controller_file;
-						if (class_exists($controllerClass)) {
-							// Guardar el controlador y liberar espacio
-							self::$controller = $controllerName;
-							unset($routeArray[0]);
+						// Guardar el controlador
+						require_once $controllerFile;
+						self::$controller = $controllerClass;
+						// Obtener la acción en base a la URL
+						if (count($routeArray) > 1) {
+							// Guardar la acción y cambiar la base de la URL
+							self::$action = strtolower($routeArray[1]);
+							self::$base .= ".";
 
-							// Obtener la acción en base a la URL
-							if (count($routeArray) > 0) {
-								// Guardar la acción y liberar espacio
-								self::$action = strtolower($routeArray[0]);
+							// Obtener los parámetros en base a la URL
+							if (count($routeArray) > 2) {
 								unset($routeArray[0]);
+								unset($routeArray[1]);
 
-								// Comprobar que la acción existe y puede ser llamada o lanzar errores en caso contrario
-								if (method_exists($controllerClass, self::$action)) {
-									if (is_callable([$controllerClass, self::$action])) {
-										// Obtener los parámetros en base a la URL
-										if (count($routeArray) > 0) {
-											foreach ($routeArray as $param)
-												self::$params[] = $param;
-										}
-									} else {
-										// No es posible realizar la acción
-										throw new BadActionScopeException(self::$action, $controllerName);
-									}
-								} else {
-									// No se ha encontrado la acción
-									throw new MissingActionException(self::$action, $controllerName);
+								// Guardar los parámetros y cambiar la base de la URL
+								foreach ($routeArray as $param) {
+									self::$params[] = $param;
+									self::$base .= "/..";
 								}
 							}
-						} else {
-							// No se ha encontrado el controlador
-							throw new MissingControllerException($controllerName);
 						}
-					} else {
-						// No se ha encontrado el archivo del controlador
-						throw new MissingControllerException($controllerName . "(FILE)");
 					}
 				}
-				return true; // Todo ha ido correctamente
 			} else {
 				// No hay ruta alguna
 				return null;
@@ -120,27 +107,20 @@
 		 * Ejecuta la acción.
 		 */
 		static public function run() {
-			$controllerClass = self::$controller . "Controller";
+			$actionArray = [self::$controller, self::$action];
 			
-			try {
+			if (!empty(self::$controller) &&
+				method_exists(self::$controller, self::$action) && is_callable($actionArray)) {
+
+				if (!empty(self::$params)) call_user_func_array($actionArray, self::$params);
+				else call_user_func($actionArray);
+
+			} else {
+
+				$controllerClass = self::$DEFAULT_CONTROLLER . "Controller";
 				require_once Application::CONTROLLER_PATH . $controllerClass . ".php";
-				$controllerInstance = new $controllerClass;
-			} catch(Exception $e) {
-				throw new MissingControllerException(self::$controller);
-			}
-			
-			$actionArray = [$controllerInstance, self::$action];
 
-			try {
-				// Realizar la acción...
-				if (self::$params == [])
-					call_user_func_array($actionArray, self::$params); // ... con parámetros
-				else
-					call_user_func($actionArray); // ... sin parámetros
-
-				View::render();
-			} catch(Exception $e) {
-				throw new BadActionScopeException(self::$action, self::$controller);
+				call_user_func([new $controllerClass(), self::$DEFAULT_ACTION]);
 			}
 		}
 	}

@@ -5,7 +5,10 @@
 	class Application {
 		
 		// Información básica
-		static public $title       = "forAll.io";
+		static public $tabTitle    = "forAll.io";
+		static public $title       = "forAll";
+		static public $subtitle    = "home";
+		static public $param       = "";
 		static public $description = "Build, design, develop";
 
 		// Rutas a archivos

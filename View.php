@@ -53,7 +53,6 @@
 			// Comprobar la existencia de la plantilla y gestionarla
 			if (file_exists($fullFileName)) {
 				self::$files[] = $fullFileName;
-
 				// Gestionar los parámetros de la vista
 				if ($params != []) self::$params[$fullFileName] = $params;
 			} else {
@@ -99,7 +98,7 @@
 
 				$viewContent .= $currentViewContent;
 			}
-
+			
 			$pageContent = str_replace("[[forallio-content]]",   $viewContent, $pageContent);
 			$pageContent = str_replace("[[ forallio-content ]]", $viewContent, $pageContent);
 

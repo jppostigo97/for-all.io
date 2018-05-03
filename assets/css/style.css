@@ -1,0 +1,205 @@
+body {
+  background: #1C1C1C;
+  color: #F2F2F2;
+  margin: 0px 0px 46px 0px;
+  font-family: "Roboto", sans-serif; }
+  @media screen and (min-width: 960px) {
+    body {
+      margin: 0; } }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0; }
+
+#wrapper {
+  background: #393939;
+  display: grid;
+  grid-row-gap: 1em;
+  grid-template-columns: 1fr;
+  height: 100%;
+  margin: 0 auto;
+  padding: 4px 8px; }
+  #wrapper #content {
+    display: grid;
+    grid-row-gap: 1em;
+    grid-template-columns: 1fr; }
+  @media screen and (min-width: 960px) {
+    #wrapper {
+      border-left: 4px solid #2A2A2A;
+      border-right: 4px solid #2A2A2A;
+      padding: 8px 16px;
+      width: 910px; } }
+  @media screen and (min-width: 1200px) {
+    #wrapper {
+      width: 1150px; } }
+
+header {
+  display: grid;
+  grid-row-gap: 1em;
+  grid-template-columns: 1fr; }
+  header hgroup {
+    border-bottom: 1px solid #6A6A6A;
+    font-family: 'Courier New', Courier, monospace;
+    padding-bottom: 10px; }
+    @media screen and (min-width: 960px) {
+      header hgroup {
+        border-bottom: 0;
+        padding: 0; } }
+
+#error-404 {
+  text-align: center; }
+
+#landing-forms {
+  display: grid;
+  grid-row-gap: 2em;
+  grid-template-columns: 1fr; }
+  @media screen and (min-width: 768px) {
+    #landing-forms form {
+      grid-template-rows: repeat(6, 1fr); } }
+  @media screen and (min-width: 768px) {
+    #landing-forms {
+      grid-column-gap: 2em;
+      grid-row-gap: 0;
+      grid-template-columns: 1fr 1fr; } }
+
+form {
+  display: grid;
+  grid-row-gap: 0.8em;
+  grid-template-columns: 1fr; }
+  form h2 {
+    margin: 10px 0px; }
+  form .form-field {
+    display: grid;
+    grid-row-gap: 0.5em;
+    grid-template-columns: 1fr; }
+    @media screen and (min-width: 960px) {
+      form .form-field:not(.vertical-field) {
+        align-content: center;
+        grid-column-gap: 1em;
+        grid-row-gap: 0;
+        grid-template-columns: 160px 1fr; }
+        form .form-field:not(.vertical-field) label {
+          padding-top: 8px; } }
+
+#forum-list {
+  display: grid;
+  grid-row-gap: 1em;
+  grid-template-columns: 1fr; }
+  #forum-list .forum .forum-title {
+    font-weight: bold;
+    margin-bottom: 0.4em; }
+  #forum-list .forum .subforum-list {
+    display: grid;
+    grid-row-gap: 0.8em;
+    grid-template-columns: 1fr; }
+    #forum-list .forum .subforum-list .subforum {
+      border-bottom: 1px dashed #505050;
+      padding-left: 10px; }
+      #forum-list .forum .subforum-list .subforum .subforum-title {
+        display: block; }
+      #forum-list .forum .subforum-list .subforum .subforum-description {
+        margin: 10px 0px 16px 10px; }
+
+#subforum #subforum-title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em; }
+#subforum #thread-list {
+  display: grid;
+  grid-row-gap: 1em;
+  grid-template-columns: 1fr; }
+  #subforum #thread-list .thread {
+    border-bottom: 1px dotted #6A6A6A;
+    display: grid;
+    grid-column-gap: .4em;
+    grid-template-areas: "t t c" "u u u";
+    grid-row-gap: .4em;
+    padding: 0px 0px 8px 8px; }
+    #subforum #thread-list .thread .thread-title {
+      grid-area: t; }
+    #subforum #thread-list .thread .thread-creator {
+      grid-area: c;
+      text-align: right; }
+    #subforum #thread-list .thread .thread-last-post {
+      grid-area: u;
+      font-size: 90%; }
+    @media screen and (min-width: 960px) {
+      #subforum #thread-list .thread {
+        grid-template-areas: "t t t t t c" "u u u u u u"; } }
+
+a {
+  color: #EE22AA;
+  text-decoration: none;
+  transition: .2s linear color; }
+  a:hover, a:active {
+    color: #FF33B6; }
+
+.user-link {
+  border-bottom: 1px solid #E6E6E6;
+  color: inherit;
+  transition: .2s linear border-bottom-color; }
+  .user-link:hover, .user-link:active {
+    border-bottom-color: transparent;
+    color: inherit; }
+
+[type="button"], [type="submit"], button, .btn {
+  background: #CC0077;
+  border: 0;
+  border-radius: 2px;
+  color: #E6E6E6;
+  cursor: pointer;
+  padding: 8px 14px;
+  transition: .25s linear background; }
+  [type="button"]:hover, [type="button"]:active, [type="submit"]:hover, [type="submit"]:active, button:hover, button:active, .btn:hover, .btn:active {
+    background: #DD1188;
+    color: #E6E6E6; }
+
+input[type="text"], input[type="password"],
+input[type="email"], input[type="date"],
+input[type="number"], textarea {
+  background: #D9D9D9;
+  border: 0;
+  color: #2A2A2A;
+  display: inline-block;
+  padding: 10px 14px;
+  resize: none; }
+
+nav#navbar {
+  background: #1C1C1C;
+  border-top: 1px solid #505050;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  width: 100%; }
+  nav#navbar ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 100%; }
+    nav#navbar ul li {
+      flex-grow: 1; }
+      nav#navbar ul li a {
+        color: #D9D9D9;
+        display: block;
+        padding: 12px 20px;
+        transition: .2s linear background; }
+        nav#navbar ul li a:hover, nav#navbar ul li a:active {
+          background: #770033; }
+        nav#navbar ul li a span:nth-child(2) {
+          display: none; }
+          @media screen and (min-width: 960px) {
+            nav#navbar ul li a span:nth-child(2) {
+              display: initial; } }
+  @media screen and (min-width: 960px) {
+    nav#navbar {
+      border-top: 0;
+      position: initial; } }
+
+.error {
+  background: rgba(220, 20, 60, 0.6);
+  border-radius: 8px;
+  margin: 0px 14px;
+  padding: 10px 20px; }
+
+/*# sourceMappingURL=style.css.map */

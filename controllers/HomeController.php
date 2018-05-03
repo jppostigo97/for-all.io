@@ -2,7 +2,7 @@
 	class HomeController {
 
 		public function index() {
-			View::load("prueba");
+			View::load("forum-list");
 		}
 	}
 ?>

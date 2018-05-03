@@ -10,41 +10,23 @@
 		private const DBUSER = "root";
 		private const DBPASS = "";
 
-		// Instancia
-		static private $instance = null;
-		
 		// Conexión mysqli con la BBDD
-		private $connection;
-
-		// Singleton
-		private function __constructor() {
-			$this->connection = new mysqli(self::DBHOST,
-				self::DBUSER, self::DBPASS,
-				self::DBNAME);
-			$this->connection->set_charset("utf8");
-		}
+		static private $connection = null;
 
 		/**
-		 * Devolver la instancia de la conexión. Crearla si es necesario.
+		 * Devolver la conexión con la BBDD.
 		 * 
-		 * @return Connection Conexión.
-		 */
-		public function getInstance() {
-			if (self::$instance == null) self::$instance = new Connection();
-
-			return self::$instance;
-		}
-
-		/**
-		 * Devuelve la conexión con la BBDD en forma de objeto mysqli.
-		 * 
-		 * @return mysqli  Conexión con la BBDD.
-		 * @return boolean *false* si no se ha instanciado.
+		 * @return mysqli Conexión con la BBDD.
 		 */
 		public function getConnection() {
-			if (self::$instance != null) return $this->connection;
+			if (self::$connection == null) {
+				self::$connection = new mysqli(self::DBHOST,
+					self::DBUSER, self::DBPASS,
+					self::DBNAME);
+				self::$connection->set_charset("utf8");
+			}
 
-			return false;
+			return self::$connection;
 		}
 	}
 ?>

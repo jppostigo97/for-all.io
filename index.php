@@ -14,6 +14,9 @@
 
 	// --- / Carga de archivos
 	
+	Router::parseUrl();
 	Router::run();
+
+	View::render();
 
 ?>
