@@ -31,6 +31,9 @@
 					<li>
 						<a href=".">
 							<span>
+								<i class="fas fa-2x fa-fw fa-home"></i>
+							</span>
+							<span>
 								<i class="fas fa-fw fa-home"></i>
 							</span>
 							<span>
@@ -43,6 +46,9 @@
 						<li>
 							<a href="user/profile">
 								<span>
+									<i class="fas fa-2x fa-fw fa-user-circle"></i>
+								</span>
+								<span>
 									<i class="fas fa-fw fa-user-circle"></i>
 								</span>
 								<span>
@@ -50,8 +56,28 @@
 								</span>
 							</a>
 						</li>
+
+						<?php if (isset($_SESSION["level"]) && $_SESSION["level"] == "admin"): ?>
+							<li>
+								<a href="admin">
+									<span>
+										<i class="fas fa-2x fa-fw fa-cogs"></i>
+									</span>
+									<span>
+										<i class="fas fa-fw fa-cogs"></i>
+									</span>
+									<span>
+										Administración
+									</span>
+								</a>
+							</li>
+						<?php endif; ?>
+
 						<li>
 							<a href="user/logout">
+								<span>
+									<i class="fas fa-2x fa-fw fa-sign-out-alt"></i>
+								</span>
 								<span>
 									<i class="fas fa-fw fa-sign-out-alt"></i>
 								</span>
@@ -63,6 +89,9 @@
 					<?php else: ?>
 						<li>
 							<a href="user/account">
+								<span>
+									<i class="fas fa-2x fa-fw fa-sign-in-alt"></i>
+								</span>
 								<span>
 									<i class="fas fa-fw fa-sign-in-alt"></i>
 								</span>

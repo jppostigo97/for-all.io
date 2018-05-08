@@ -186,11 +186,13 @@ nav#navbar {
         transition: .2s linear background; }
         nav#navbar ul li a:hover, nav#navbar ul li a:active {
           background: #770033; }
-        nav#navbar ul li a span:nth-child(2) {
+        nav#navbar ul li a span:not(:first-child) {
           display: none; }
-          @media screen and (min-width: 960px) {
-            nav#navbar ul li a span:nth-child(2) {
-              display: initial; } }
+        @media screen and (min-width: 960px) {
+          nav#navbar ul li a span:not(:first-child) {
+            display: initial; }
+          nav#navbar ul li a span:first-child {
+            display: none; } }
   @media screen and (min-width: 960px) {
     nav#navbar {
       border-top: 0;

@@ -80,14 +80,19 @@ nav#navbar {
 					background: $black-purple;
 				}
 
-				span:nth-child(2) {
+				span:not(:first-child) {
 					display: none;
-
-					@media #{$break-lg} {
-						display: initial;
-					}
 				}
 
+				@media #{$break-lg} {
+					span:not(:first-child) {
+						display: initial;
+					}
+
+					span:first-child {
+						display: none;
+					}
+				}
 			}
 		}
 	}
