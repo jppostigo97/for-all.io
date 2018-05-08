@@ -20,12 +20,18 @@
 
 					if ($result->num_rows) {
 						$user = $result->fetch_assoc();
-						
+
 						if (password_verify($_POST["login_password"], $user["password"])) {
 							// Contraseña coincide: login
 							$_SESSION["id"]    = $user["id"];
 							$_SESSION["user"]  = $user["nick"];
 							$_SESSION["email"] = $user["email"];
+
+							// Añadir a la sesión el nivel del usuario
+							if ($user["level"] != null) {
+								$l = Connection::getConnection()->query("SELECT * FROM user_role WHERE id=" . $user["level"] . ";");
+								if ($l->num_rows) $_SESSION["level"] = $l->fetch_assoc()["slug"];
+							}
 
 							header("Location: ../");
 							exit;
@@ -45,13 +51,13 @@
 						->real_escape_string($_POST["reg_username"]);
 					$password = ($_POST["reg_password"] == $_POST["reg_password"])?
 						password_hash($_POST["reg_password"], PASSWORD_DEFAULT) : false;
-					
+
 					// Queries para comprobar
 					$emailCheckQuery = "SELECT * FROM user WHERE email='${email}';";
 					$userCheckQuery  = "SELECT * FROM user WHERE nick='${username}';";
 					$userCheck  = Connection::getConnection()->query($userCheckQuery)->num_rows;
 					$emailCheck = Connection::getConnection()->query($emailCheckQuery)->num_rows;
-					
+
 					if (!$password)  $error = "Las contraseñas introducidas no coinciden.";
 					if ($userCheck)  $error = "El usuario introducido ya está en uso.";
 					if ($emailCheck) $error = "El email introducido ya está en uso.";
@@ -62,9 +68,9 @@
 							$email . "', '" .
 							$username . "', '" .
 							$password . "');";
-						
+
 						$registered = Connection::getConnection()->query($query);
-						
+
 						if ($registered) {
 							// TODO: mandar email de validación al usuario al registrar con éxito
 							$noRenderForm = true;
@@ -103,7 +109,7 @@
 			if (!empty($user)) {
 				$user = Connection::getConnection()
 					->query("SELECT * FROM user WHERE nick='${user}';");
-					
+
 				if ($user->num_rows) {
 					$user = $user->fetch_assoc();
 					Application::$param    = "\"" . $user["nick"] . "\"";
