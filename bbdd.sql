@@ -72,3 +72,14 @@ CREATE TABLE message (
 	FOREIGN KEY (thread) REFERENCES thread(id) ON DELETE CASCADE,
 	FOREIGN KEY (author) REFERENCES user(id) ON DELETE CASCADE
 );
+
+/* Añadir algunos roles de usuario. */
+INSERT INTO user_role (slug, name) VALUES
+	("admin", "Administrador"),
+	("mod", "Moderador"),
+	("ana", "Analista Programador"),
+	("sen", "Programador Senior"),
+	("jun", "Programador Junior"),
+	("bec", "Becario");
+
+INSERT INTO config (ckey, cvalue) VALUES ("def_role", "bec");
