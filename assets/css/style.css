@@ -17,7 +17,7 @@ h1, h2, h3, h4, h5, h6 {
   grid-template-columns: 1fr;
   height: 100%;
   margin: 0 auto;
-  padding: 4px 8px; }
+  padding: 4px 8px 20px 8px; }
   #wrapper #content {
     display: grid;
     grid-row-gap: 1em;
@@ -26,7 +26,7 @@ h1, h2, h3, h4, h5, h6 {
     #wrapper {
       border-left: 4px solid #2A2A2A;
       border-right: 4px solid #2A2A2A;
-      padding: 8px 16px;
+      padding: 10px 16px;
       width: 910px; } }
   @media screen and (min-width: 1200px) {
     #wrapper {
@@ -125,6 +125,9 @@ form {
     @media screen and (min-width: 960px) {
       #subforum #thread-list .thread {
         grid-template-areas: "t t t t t c" "u u u u u u"; } }
+
+#thread #thread-messages {
+  margin: 20px 0px; }
 
 a {
   color: #EE22AA;

@@ -18,7 +18,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; }
 	grid-template-columns: 1fr;
 	height: 100%;
 	margin: 0 auto;
-	padding: 4px 8px;
+	padding: 4px 8px 20px 8px;
 
 	#content {
 		display: grid;
@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; }
 	@media #{$break-lg} {
 		border-left: 4px solid $black;
 		border-right: 4px solid $black;
-		padding: 8px 16px;
+		padding: 10px 16px;
 		width: 910px;
 	}
 
@@ -47,7 +47,7 @@ header {
 		border-bottom: 1px solid $grey;
 		font-family: 'Courier New', Courier, monospace;
 		padding-bottom: 10px;
-		
+
 		@media #{$break-lg} {
 			border-bottom: 0;
 			padding: 0;
@@ -85,7 +85,7 @@ form {
 	h2 {
 		margin: 10px 0px;
 	}
-	
+
 	.form-field {
 		display: grid;
 		grid-row-gap: 0.5em;
@@ -125,7 +125,7 @@ form {
 			.subforum {
 				border-bottom: 1px dashed $grey-base;
 				padding-left: 10px;
-	
+
 				.subforum-title {
 					display: block;
 				}
@@ -144,7 +144,7 @@ form {
 		justify-content: space-between;
 		margin-bottom: 1em;
 	}
-	
+
 	#thread-list {
 		display: grid;
 		grid-row-gap: 1em;
@@ -178,5 +178,11 @@ form {
 								 	 "u u u u u u";
 			}
 		}
+	}
+}
+
+#thread {
+	#thread-messages {
+		margin: 20px 0px;
 	}
 }
