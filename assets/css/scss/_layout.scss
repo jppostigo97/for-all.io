@@ -9,6 +9,8 @@ body {
 	}
 }
 
+.clearfix { clear: both; }
+
 h1, h2, h3, h4, h5, h6 { margin: 0; }
 
 #wrapper {
@@ -18,7 +20,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; }
 	grid-template-columns: 1fr;
 	height: 100%;
 	margin: 0 auto;
-	padding: 4px 8px 20px 8px;
+	padding: 4px 8px 32px 8px;
 
 	#content {
 		display: grid;
@@ -29,7 +31,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; }
 	@media #{$break-lg} {
 		border-left: 4px solid $black;
 		border-right: 4px solid $black;
-		padding: 10px 16px;
+		padding: 10px 16px 22px 16px;
 		width: 910px;
 	}
 
@@ -184,5 +186,30 @@ form {
 #thread {
 	#thread-messages {
 		margin: 20px 0px;
+
+		.message {
+			margin-bottom: 20px;
+
+			.message-info {
+				display: flex;
+				float: left;
+				justify-content: flex-start;
+				margin: 0px 24px 12px 0px;
+
+				.message-author {
+					align-items: center;
+					display: flex;
+					flex-direction: column;
+
+					img {
+						margin-bottom: 8px;
+					}
+				}
+			}
+
+			.message-content {
+				text-align: justify;
+			}
+		}
 	}
 }
