@@ -20,6 +20,7 @@ CREATE TABLE user (
 	reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	last_connection TIMESTAMP,
 	level INT, /* user_role */
+	api_token VARCHAR(300),
 	verified BIT DEFAULT 0,
 	active BIT DEFAULT 1,
 	FOREIGN KEY (level) REFERENCES user_role(id)
