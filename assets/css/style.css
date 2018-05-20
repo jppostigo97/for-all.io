@@ -1,8 +1,13 @@
 body {
   background: #1C1C1C;
   color: #F2F2F2;
+  font-size: 110%;
+  line-height: 1.4;
   margin: 0px 0px 46px 0px;
-  font-family: "Roboto", sans-serif; }
+  font-family: "Open Sans", sans-serif; }
+  @media screen and (max-width: 960px) {
+    body {
+      letter-spacing: 2px; } }
   @media screen and (min-width: 960px) {
     body {
       margin: 0; } }
@@ -129,23 +134,38 @@ form {
       #subforum #thread-list .thread {
         grid-template-areas: "t t t t t c" "u u u u u u"; } }
 
-#thread #thread-messages {
-  margin: 20px 0px; }
-  #thread #thread-messages .message {
-    margin-bottom: 20px; }
-    #thread #thread-messages .message .message-info {
+#thread #thread-title {
+  margin-bottom: 20px; }
+#thread #thread-more {
+  margin-top: 16px; }
+
+#message-list .message {
+  margin-bottom: 20px; }
+  #message-list .message .message-info {
+    display: flex;
+    float: left;
+    justify-content: flex-start;
+    margin: 0px 24px 12px 0px; }
+    #message-list .message .message-info .message-author {
+      align-items: center;
       display: flex;
-      float: left;
-      justify-content: flex-start;
-      margin: 0px 24px 12px 0px; }
-      #thread #thread-messages .message .message-info .message-author {
-        align-items: center;
-        display: flex;
-        flex-direction: column; }
-        #thread #thread-messages .message .message-info .message-author img {
-          margin-bottom: 8px; }
-    #thread #thread-messages .message .message-content {
-      text-align: justify; }
+      flex-direction: column; }
+      #message-list .message .message-info .message-author img {
+        margin-bottom: 8px; }
+  #message-list .message .message-content {
+    text-align: justify; }
+
+#profile #activity {
+  display: grid;
+  grid-gap: 1.4em 1em;
+  margin: 14px 0px; }
+  #profile #activity > div h3 {
+    margin-bottom: 12px; }
+  #profile #activity > div .thread {
+    margin-bottom: 4px; }
+  @media screen and (min-width: 960px) {
+    #profile #activity {
+      grid-template-columns: 1fr 1fr; } }
 
 a {
   color: #EE22AA;
@@ -168,6 +188,8 @@ a {
   border-radius: 2px;
   color: #E6E6E6;
   cursor: pointer;
+  display: inline-block;
+  margin: 8px 0px 0px 0px;
   padding: 8px 14px;
   transition: .25s linear background; }
   [type="button"]:hover, [type="button"]:active, [type="submit"]:hover, [type="submit"]:active, button:hover, button:active, .btn:hover, .btn:active {
