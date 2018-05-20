@@ -16,7 +16,7 @@ body {
   clear: both; }
 
 h1, h2, h3, h4, h5, h6 {
-  margin: 0; }
+  margin: 16px 0px; }
 
 #wrapper {
   background: #393939;
@@ -111,6 +111,10 @@ form {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1em; }
+  #subforum #subforum-title h2 {
+    margin: 0px; }
+  #subforum #subforum-title a.btn {
+    margin: 0px; }
 #subforum #thread-list {
   display: grid;
   grid-row-gap: 1em;
@@ -198,7 +202,7 @@ a {
   color: #E6E6E6;
   cursor: pointer;
   display: inline-block;
-  margin: 8px 0px 0px 0px;
+  margin: 8px 0px;
   padding: 8px 14px;
   transition: .25s linear background; }
   [type="button"]:hover, [type="button"]:active, [type="submit"]:hover, [type="submit"]:active, button:hover, button:active, .btn:hover, .btn:active {

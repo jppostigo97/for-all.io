@@ -5,6 +5,137 @@
 			Application::$subtitle = "user";
 		}
 
+		public function edit_profile() {
+			if (isset($_SESSION["id"])) {
+				$user = Connection::getConnection()
+					->query("SELECT user.nick, user.email, user_role.name as role FROM user ".
+						"LEFT JOIN user_role ON user.level=user_role.id " .
+						"WHERE user.id=${_SESSION["id"]};");
+
+				if ($user->num_rows) {
+					$user = $user->fetch_assoc();
+
+					View::load("edit-profile", [
+						"user"  => $user["nick"],
+						"email" => $user["email"],
+						"role"  => $user["role"]
+					]);
+				} else {
+					View::load("404");
+				}
+			} else {
+				header("Location: ../");
+			}
+		}
+
+		public function validate_edition() {
+			if (isset($_SESSION["id"])) {
+				$user = Connection::getConnection()
+					->query("SELECT user.nick, user.email, user.password, user_role.name as role " .
+						"FROM user LEFT JOIN user_role ON user.level=user_role.id " .
+						"WHERE user.id=${_SESSION['id']};");
+
+				if (isset($_POST["password"])) {
+					if ($user) {
+						$user = $user->fetch_assoc();
+
+						if (password_verify($_POST["password"], $user["password"])) {
+							$builtQuery = "UPDATE user SET";
+
+							$execute = false;
+
+							if (isset($_POST["newemail"]) && $_POST["newemail"] != $user["email"]) {
+								$newEmailUsed = false;
+								$emailQuery   = "SELECT email FROM user WHERE email='" .
+									Connection::getConnection()
+										->real_escape_string($_POST["newemail"])
+									. "'";
+								$emailCheck = Connection::getConnection()->query($emailQuery);
+								$newEmailUsed = ($emailCheck->num_rows)? true : false;
+
+								if ($newEmailUsed) {
+									View::load("edit-profile", [
+										"user" => $user["nick"],
+										"email" => $user["email"],
+										"role"  => $user["role"],
+										"error" => "El email introducido ya está en uso."
+									]);
+								} else {
+									$builtQuery .= " email='" .
+										Connection::getConnection()
+											->real_escape_string($_POST["newemail"])
+										."'";
+									$execute = true;
+								}
+							}
+
+							if (isset($_POST["newpassword"]) && isset($_POST["newpasswordre"]) &&
+								!empty($_POST["newpassword"]) && !empty($_POST["newpasswordre"]) &&
+								$_POST["newpassword"] == $_POST["newpasswordre"]) {
+								$builtQuery .= " password='" .
+									password_hash($_POST["newpassword"], PASSWORD_DEFAULT) . "'";
+								$execute = true;
+							} else {
+								View::load("edit-profile", [
+									"user"  => $user["nick"],
+									"email" => $user["email"],
+									"role"  => $user["role"],
+									"error" => "Error en la nueva contraseña."
+								]);
+							}
+
+							$builtQuery .= " WHERE id=" . $_SESSION["id"] . ";";
+
+							if ($execute) {
+								$edited = Connection::getConnection()->query($builtQuery);
+
+								if ($edited) {
+									header("Location: ../user/profile/" . $user["nick"]);
+									exit;
+								} else {
+									View::load("edit-profile", [
+										"user"  => $user["nick"],
+										"email" => $user["email"],
+										"role"  => $user["role"],
+										"error" => "Error desconocido."
+									]);
+								}
+							} else {
+								View::load("edit-profile", [
+									"user"  => $user["nick"],
+									"email" => $user["email"],
+									"role"  => $user["role"],
+									"error" => "No hay campos que modificar."
+								]);
+							}
+						} else {
+							View::load("edit-profile", [
+								"user"  => $user["nick"],
+								"email" => $user["email"],
+								"role"  => $user["role"],
+								"error" => "La contraseña introducida es incorrecta."
+							]);
+						}
+					}
+				} else {
+					if ($user->num_rows) {
+						$user = $user->fetch_assoc();
+						View::load("edit-profile", [
+							"user"  => $user["nick"],
+							"email" => $user["email"],
+							"role"  => $user["role"],
+							"error" =>
+								"Es necesario confirmar tu contraseña para poder hacer un cambio."
+						]);
+					} else {
+						View::load("404");
+					}
+				}
+			} else {
+				View::load("404");
+			}
+		}
+
 		public function account() {
 			if (!isset($_SESSION["user"])) {
 				// Entrar y registrar
@@ -29,7 +160,9 @@
 
 							// Añadir a la sesión el nivel del usuario
 							if ($user["level"] != null) {
-								$l = Connection::getConnection()->query("SELECT * FROM user_role WHERE id=" . $user["level"] . ";");
+								$l = Connection::getConnection()
+									->query("SELECT * FROM user_role WHERE id=" .
+										$user["level"] . ";");
 								if ($l->num_rows) $_SESSION["level"] = $l->fetch_assoc()["slug"];
 							}
 
@@ -65,7 +198,8 @@
 					if ($password && !$emailCheck && !$userCheck) {
 						// Contraseñas coinciden y ni el usuario ni el email están en uso: registrar
 						// Aplicar rol de usuario predeterminado
-						$defaultRoleQuery = "SELECT * cvalue as value FROM config WHERE ckey='def_role';";
+						$defaultRoleQuery =
+							"SELECT * cvalue as value FROM config WHERE ckey='def_role';";
 						$query = "INSERT INTO user (email, nick, password) VALUES('" .
 							$email . "', '" .
 							$username . "', '" .
@@ -85,11 +219,12 @@
 				// View
 				if (!isset($noRenderForm)) {
 					View::load("login-and-register-form", [
-						"login_email" => (isset($_POST["login_email"]))? $_POST["login_email"] : "",
-						"reg_email" => (isset($_POST["reg_email"]))? $_POST["reg_email"] : "",
+						"login_email"  => (isset($_POST["login_email"]))?
+											$_POST["login_email"] : "",
+						"reg_email"    => (isset($_POST["reg_email"]))? $_POST["reg_email"] : "",
 						"reg_username" => (isset($_POST["reg_username"]))?
-							$_POST["reg_username"] : "",
-						"error" => (isset($error))? $error : ""
+											$_POST["reg_username"] : "",
+						"error"        => (isset($error))? $error : ""
 					]);
 				}
 			} else {
@@ -109,9 +244,11 @@
 			Application::$subtitle = "profile";
 
 			if (!empty($user)) {
+				$q = "SELECT user.id, user.nick, user.email, user.last_connection, " .
+					"user_role.name as role FROM user LEFT JOIN user_role " .
+					"ON user.level=user_role.id WHERE user.nick='${user}';";
 				$user = Connection::getConnection()
-					->query("SELECT user.id, user.nick, user.email, user.last_connection, user_role.name as role " .
-					"FROM user LEFT JOIN user_role ON user.level=user_role.id WHERE user.nick='${user}';");
+					->query($q);
 
 				if ($user->num_rows) {
 					$user = $user->fetch_assoc();
@@ -126,10 +263,11 @@
 				}
 			} elseif (isset($_SESSION["user"])) {
 				Application::$param    = "\"" . $_SESSION["user"] . "\"";
+				$q = "SELECT user.id, user.nick, user.email, user.last_connection, " .
+					"user_role.name as role FROM user LEFT JOIN user_role " .
+					"ON user.level=user_role.id WHERE user.nick='${_SESSION["user"]}';";
 				$user = Connection::getConnection()
-					->query("SELECT user.id, user.nick, user.email, user.last_connection, user_role.name as role " .
-					"FROM user LEFT JOIN user_role ON user.level=user_role.id WHERE user.nick='" .
-					$_SESSION["user"] . "';")->fetch_assoc();
+					->query()->fetch_assoc();
 					View::load("profile", [
 						"userId"   => $user["id"],
 						"username" => $user["nick"],
