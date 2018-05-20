@@ -1,8 +1,14 @@
 body {
 	background: $black-base;
 	color: $white-base;
+	font-size: 110%;
+	line-height: 1.4;
 	margin: 0px 0px 46px 0px;
-	font-family: "Roboto", sans-serif;
+	font-family: "Open Sans", sans-serif;
+
+	@media screen and (max-width: 960px) {
+		letter-spacing: 2px;
+	}
 
 	@media #{$break-lg} {
 		margin: 0;
@@ -184,32 +190,61 @@ form {
 }
 
 #thread {
-	#thread-messages {
-		margin: 20px 0px;
+	#thread-title {
+		margin-bottom: 20px;
+	}
 
-		.message {
-			margin-bottom: 20px;
+	#thread-more {
+		margin-top: 16px;
+	}
+}
 
-			.message-info {
+#message-list {
+
+	.message {
+		margin-bottom: 20px;
+
+		.message-info {
+			display: flex;
+			float: left;
+			justify-content: flex-start;
+			margin: 0px 24px 12px 0px;
+
+			.message-author {
+				align-items: center;
 				display: flex;
-				float: left;
-				justify-content: flex-start;
-				margin: 0px 24px 12px 0px;
+				flex-direction: column;
 
-				.message-author {
-					align-items: center;
-					display: flex;
-					flex-direction: column;
-
-					img {
-						margin-bottom: 8px;
-					}
+				img {
+					margin-bottom: 8px;
 				}
 			}
+		}
 
-			.message-content {
-				text-align: justify;
+		.message-content {
+			text-align: justify;
+		}
+	}
+}
+
+#profile {
+	#activity {
+		display: grid;
+		grid-gap: 1.4em 1em;
+		margin: 14px 0px;
+
+		&>div {
+			h3 {
+				margin-bottom: 12px;
 			}
+
+			.thread {
+				margin-bottom: 4px;
+			}
+		}
+
+		@media #{$break-lg} {
+			grid-template-columns: 1fr 1fr;
 		}
 	}
 }

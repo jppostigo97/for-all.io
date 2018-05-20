@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 	<title><?= Application::$tabTitle ?></title>
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" />
 	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
 	<link rel="stylesheet" href="assets/css/style.css" />
 </head>
@@ -31,7 +31,7 @@
 					<li>
 						<a href=".">
 							<span>
-								<i class="fas fa-2x fa-fw fa-home"></i>
+								<i class="fas fa-lg fa-fw fa-home"></i>
 							</span>
 							<span>
 								<i class="fas fa-fw fa-home"></i>
@@ -46,7 +46,7 @@
 						<li>
 							<a href="user/profile">
 								<span>
-									<i class="fas fa-2x fa-fw fa-user-circle"></i>
+									<i class="fas fa-lg fa-fw fa-user-circle"></i>
 								</span>
 								<span>
 									<i class="fas fa-fw fa-user-circle"></i>
@@ -61,7 +61,7 @@
 							<li>
 								<a href="admin">
 									<span>
-										<i class="fas fa-2x fa-fw fa-cogs"></i>
+										<i class="fas fa-lg fa-fw fa-cogs"></i>
 									</span>
 									<span>
 										<i class="fas fa-fw fa-cogs"></i>
@@ -76,7 +76,7 @@
 						<li>
 							<a href="user/logout">
 								<span>
-									<i class="fas fa-2x fa-fw fa-sign-out-alt"></i>
+									<i class="fas fa-lg fa-fw fa-sign-out-alt"></i>
 								</span>
 								<span>
 									<i class="fas fa-fw fa-sign-out-alt"></i>
@@ -90,7 +90,7 @@
 						<li>
 							<a href="user/account">
 								<span>
-									<i class="fas fa-2x fa-fw fa-sign-in-alt"></i>
+									<i class="fas fa-lg fa-fw fa-sign-in-alt"></i>
 								</span>
 								<span>
 									<i class="fas fa-fw fa-sign-in-alt"></i>
