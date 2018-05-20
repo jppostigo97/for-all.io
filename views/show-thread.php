@@ -5,7 +5,7 @@
 <div id="thread">
 	<h2 id="thread-title">[[ title ]]</h2>
 
-	<div id="thread-messages">
+	<div id="message-list">
 		<?php while($msg = $messages->fetch_assoc()): ?>
 			<?php $author = Connection::getConnection()->query("SELECT * FROM user WHERE id=" .
 				$msg["author"] . ";")->fetch_assoc()["nick"]; ?>

@@ -64,6 +64,8 @@
 
 					if ($password && !$emailCheck && !$userCheck) {
 						// Contraseñas coinciden y ni el usuario ni el email están en uso: registrar
+						// Aplicar rol de usuario predeterminado
+						$defaultRoleQuery = "SELECT * cvalue as value FROM config WHERE ckey='def_role';";
 						$query = "INSERT INTO user (email, nick, password) VALUES('" .
 							$email . "', '" .
 							$username . "', '" .
@@ -108,26 +110,30 @@
 
 			if (!empty($user)) {
 				$user = Connection::getConnection()
-					->query("SELECT * FROM user WHERE nick='${user}';");
+					->query("SELECT user.id, user.nick, user.email, user.last_connection, user_role.name as role " .
+					"FROM user LEFT JOIN user_role ON user.level=user_role.id WHERE user.nick='${user}';");
 
 				if ($user->num_rows) {
 					$user = $user->fetch_assoc();
 					Application::$param    = "\"" . $user["nick"] . "\"";
-					View::load("profile", [
-						"username" => $user["nick"],
-						"email"    => $user["email"]
-					]);
+				} else {
+					View::load("404");
 				}
 			} elseif (isset($_SESSION["user"])) {
 				Application::$param    = "\"" . $_SESSION["user"] . "\"";
-				View::load("profile", [
-					"username" => $_SESSION["user"],
-					"email"    => $_SESSION["email"]
-				]);
+				$user = Connection::getConnection()
+					->query("SELECT user.id, user.nick, user.email, user.last_connection, user_role.name as role " .
+					"FROM user LEFT JOIN user_role ON user.level=user_role.id WHERE user.nick='" .
+					$_SESSION["user"] . "';")->fetch_assoc();
 			} else {
 				header("Location: ./account");
 				exit;
 			}
+			View::load("profile", [
+				"userId"   => $user["id"],
+				"username" => $user["nick"],
+				"role"     => $user["role"]
+			]);
 		}
 	}
 ?>

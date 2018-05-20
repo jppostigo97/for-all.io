@@ -19,18 +19,22 @@
 					"FROM thread as t JOIN user as u ON t.creator=u.id " .
 					"WHERE t.subforum=${subforum_id} ORDER BY t.id DESC;";
 		$threadList = Connection::getConnection()->query($query);
-		echo Connection::getConnection()->error;
 	?>
-	
+
 	<?php if ($threadList->num_rows): ?>
 		<div id="thread-list">
 			<?php while ($thread = $threadList->fetch_assoc()): ?>
+
+				<?php $lastMessageAuthor = Connection::getConnection()
+					->query("SELECT user.id, user.nick FROM user LEFT JOIN message ON user.id=message.author " .
+						"WHERE message.thread=" . $thread["id"] ." ORDER BY message.id DESC;")
+					->fetch_assoc()["nick"]; ?>
 
 				<div class="thread">
 					<a class="thread-title" href="thread/show/<?= $thread["id"] ?>">
 						<?= $thread["title"] ?>
 					</a>
-					
+
 					<div class="thread-creator">
 						Escrito por
 						<a href="user/profile/<?= $thread["user"] ?>" class="user-link">
@@ -39,7 +43,7 @@
 					</div>
 
 					<div class="thread-last-post">
-						Último mensaje: <a href="" class="user-link">yo</a>
+						Último mensaje: <a href="user/profile/<?= $lastMessageAuthor ?>" class="user-link"><?= $lastMessageAuthor ?></a>
 					</div>
 				</div>
 
