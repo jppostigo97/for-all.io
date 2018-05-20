@@ -44,7 +44,7 @@
 
 					<?php if (isset($_SESSION["user"])): ?>
 						<li>
-							<a href="user/profile">
+							<a href="user/profile/<?= $_SESSION["user"] ?>">
 								<span>
 									<i class="fas fa-lg fa-fw fa-user-circle"></i>
 								</span>

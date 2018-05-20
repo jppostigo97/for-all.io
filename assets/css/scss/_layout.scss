@@ -228,8 +228,19 @@ form {
 }
 
 #profile {
+	display: grid;
+	grid-template-areas: "u u u e"
+						 "a a a a";
+
+	#profile-info { grid-area: u; }
+	#edit-profile {
+		grid-area: e;
+		text-align: right;
+	}
+
 	#activity {
 		display: grid;
+		grid-area: a;
 		grid-gap: 1.4em 1em;
 		margin: 14px 0px;
 

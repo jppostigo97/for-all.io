@@ -155,17 +155,26 @@ form {
   #message-list .message .message-content {
     text-align: justify; }
 
-#profile #activity {
+#profile {
   display: grid;
-  grid-gap: 1.4em 1em;
-  margin: 14px 0px; }
-  #profile #activity > div h3 {
-    margin-bottom: 12px; }
-  #profile #activity > div .thread {
-    margin-bottom: 4px; }
-  @media screen and (min-width: 960px) {
-    #profile #activity {
-      grid-template-columns: 1fr 1fr; } }
+  grid-template-areas: "u u u e" "a a a a"; }
+  #profile #profile-info {
+    grid-area: u; }
+  #profile #edit-profile {
+    grid-area: e;
+    text-align: right; }
+  #profile #activity {
+    display: grid;
+    grid-area: a;
+    grid-gap: 1.4em 1em;
+    margin: 14px 0px; }
+    #profile #activity > div h3 {
+      margin-bottom: 12px; }
+    #profile #activity > div .thread {
+      margin-bottom: 4px; }
+    @media screen and (min-width: 960px) {
+      #profile #activity {
+        grid-template-columns: 1fr 1fr; } }
 
 a {
   color: #EE22AA;

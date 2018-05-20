@@ -9,11 +9,17 @@
 ?>
 
 <div id="profile">
-	<h2>
+	<h2 id="profile-info">
 		[[ username ]]
 		-
 		<small>[[ role ]]</small>
 	</h2>
+
+	<?php if (isset($_SESSION["user"]) && $_SESSION["user"] == $username): ?>
+		<div id="edit-profile">
+			<a href="user/edit_profile" class="btn">Editar</a>
+		</div>
+	<?php endif; ?>
 
 	<div id="activity">
 		<?php if ($threadList): ?>

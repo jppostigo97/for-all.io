@@ -116,6 +116,11 @@
 				if ($user->num_rows) {
 					$user = $user->fetch_assoc();
 					Application::$param    = "\"" . $user["nick"] . "\"";
+					View::load("profile", [
+						"userId"   => $user["id"],
+						"username" => $user["nick"],
+						"role"     => $user["role"]
+					]);
 				} else {
 					View::load("404");
 				}
@@ -125,15 +130,15 @@
 					->query("SELECT user.id, user.nick, user.email, user.last_connection, user_role.name as role " .
 					"FROM user LEFT JOIN user_role ON user.level=user_role.id WHERE user.nick='" .
 					$_SESSION["user"] . "';")->fetch_assoc();
+					View::load("profile", [
+						"userId"   => $user["id"],
+						"username" => $user["nick"],
+						"role"     => $user["role"]
+					]);
 			} else {
 				header("Location: ./account");
 				exit;
 			}
-			View::load("profile", [
-				"userId"   => $user["id"],
-				"username" => $user["nick"],
-				"role"     => $user["role"]
-			]);
 		}
 	}
 ?>
