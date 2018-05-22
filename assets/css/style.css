@@ -34,7 +34,7 @@ h1, h2, h3, h4, h5, h6 {
     #wrapper {
       border-left: 4px solid #2A2A2A;
       border-right: 4px solid #2A2A2A;
-      padding: 10px 16px 22px 16px;
+      padding: 10px 20px 22px 20px;
       width: 910px; } }
   @media screen and (min-width: 1200px) {
     #wrapper {
@@ -139,9 +139,19 @@ form {
         grid-template-areas: "t t t t t c" "u u u u u u"; } }
 
 #thread #thread-title {
-  margin-bottom: 20px; }
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px; }
+  #thread #thread-title h2 {
+    margin: 0px; }
+  #thread #thread-title a.btn {
+    margin: 0px; }
+#thread #message-list {
+  width: 100%; }
 #thread #thread-more {
-  margin-top: 16px; }
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px; }
 
 #message-list .message {
   margin-bottom: 20px; }

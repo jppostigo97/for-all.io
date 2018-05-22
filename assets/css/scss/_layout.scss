@@ -37,7 +37,7 @@ h1, h2, h3, h4, h5, h6 { margin: 16px 0px; }
 	@media #{$break-lg} {
 		border-left: 4px solid $black;
 		border-right: 4px solid $black;
-		padding: 10px 16px 22px 16px;
+		padding: 10px 20px 22px 20px;
 		width: 910px;
 	}
 
@@ -197,11 +197,23 @@ form {
 
 #thread {
 	#thread-title {
-		margin-bottom: 20px;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 24px;
+
+		h2 { margin: 0px; }
+
+		a.btn { margin: 0px; }
+	}
+	
+	#message-list {
+		width: 100%;
 	}
 
 	#thread-more {
-		margin-top: 16px;
+		display: flex;
+		justify-content: space-between;
+		margin-top: 24px;
 	}
 }
 
