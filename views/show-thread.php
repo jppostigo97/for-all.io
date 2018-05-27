@@ -1,5 +1,3 @@
-<script src="app/components/thread.messageList.js"></script>
-
 <?php
 	$messages = Connection::getConnection()->query("SELECT * FROM message WHERE thread=${thread};");
 ?>

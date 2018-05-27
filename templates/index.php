@@ -6,15 +6,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 	<title><?= Application::$tabTitle ?></title>
+	
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" />
 	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
 	<link rel="stylesheet" href="assets/css/style.css" />
+
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
 	<script src="https://code.angularjs.org/1.6.10/angular-resource.min.js"></script>
 	<script src="https://code.angularjs.org/1.6.10/angular-route.min.js"></script>
+
 	<script src="app/modules/admin.module.js"></script>
 	<script src="app/modules/thread.module.js"></script>
 	<script src="app/modules/forAll.module.js"></script>
+
+	<script src="app/components/admin.adminPanel.js"></script>
+	<script src="app/components/thread.messageList.js"></script>
 </head>
 <body ng-app="forAll">
 	<div id="wrapper">
