@@ -1,13 +1,8 @@
 body {
   background: #1C1C1C;
   color: #F2F2F2;
-  font-size: 110%;
-  line-height: 1.4;
   margin: 0px 0px 46px 0px;
   font-family: "Open Sans", sans-serif; }
-  @media screen and (max-width: 960px) {
-    body {
-      letter-spacing: 2px; } }
   @media screen and (min-width: 960px) {
     body {
       margin: 0; } }
@@ -30,6 +25,11 @@ h1, h2, h3, h4, h5, h6 {
     display: grid;
     grid-row-gap: 1em;
     grid-template-columns: 1fr; }
+    @media screen and (max-width: 960px) {
+      #wrapper #content {
+        font-size: 110%;
+        letter-spacing: 2px;
+        line-height: 1.4; } }
   @media screen and (min-width: 960px) {
     #wrapper {
       border-left: 4px solid #2A2A2A;
@@ -152,9 +152,21 @@ form {
   display: flex;
   justify-content: space-between;
   margin-top: 24px; }
+  #thread #thread-more #thread-pagination {
+    list-style: none; }
+    #thread #thread-more #thread-pagination li {
+      display: inline-block; }
+      #thread #thread-more #thread-pagination li a {
+        background: #B7006A;
+        color: #F2F2F2;
+        cursor: pointer;
+        margin: 0px 6px;
+        padding: 8px 16px; }
+        #thread #thread-more #thread-pagination li a:hover, #thread #thread-more #thread-pagination li a:active, #thread #thread-more #thread-pagination li a.active {
+          background: #DD1188; }
 
 #message-list .message {
-  margin-bottom: 20px; }
+  margin-bottom: 32px; }
   #message-list .message .message-info {
     display: flex;
     float: left;

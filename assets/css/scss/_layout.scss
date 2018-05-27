@@ -1,14 +1,8 @@
 body {
 	background: $black-base;
 	color: $white-base;
-	font-size: 110%;
-	line-height: 1.4;
 	margin: 0px 0px 46px 0px;
 	font-family: "Open Sans", sans-serif;
-
-	@media screen and (max-width: 960px) {
-		letter-spacing: 2px;
-	}
 
 	@media #{$break-lg} {
 		margin: 0;
@@ -32,6 +26,12 @@ h1, h2, h3, h4, h5, h6 { margin: 16px 0px; }
 		display: grid;
 		grid-row-gap: 1em;
 		grid-template-columns: 1fr;
+
+		@media screen and (max-width: 960px) {
+			font-size: 110%;
+			letter-spacing: 2px;
+			line-height: 1.4;
+		}
 	}
 
 	@media #{$break-lg} {
@@ -205,7 +205,7 @@ form {
 
 		a.btn { margin: 0px; }
 	}
-	
+
 	#message-list {
 		width: 100%;
 	}
@@ -214,13 +214,33 @@ form {
 		display: flex;
 		justify-content: space-between;
 		margin-top: 24px;
+
+		#thread-pagination {
+			list-style: none;
+
+			li {
+				display: inline-block;
+
+				a {
+					background: $purple0;
+					color: $white-base;
+					cursor: pointer;
+					margin: 0px 6px;
+					padding: 8px 16px;
+
+					&:hover, &:active, &.active {
+						background: $purple2;
+					}
+				}
+			}
+		}
 	}
 }
 
 #message-list {
 
 	.message {
-		margin-bottom: 20px;
+		margin-bottom: 32px;
 
 		.message-info {
 			display: flex;
