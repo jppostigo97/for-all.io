@@ -4,7 +4,7 @@
 		"JOIN subforum ON thread.subforum=subforum.id WHERE thread.creator=$userId;";
 	$threadList  = Connection::getConnection()->query($threadQuery);
 
-	$messageQuery = "SELECT * FROM message WHERE author=$userId ORDER BY id DESC LIMIT 1,5;";
+	$messageQuery = "SELECT * FROM message WHERE author=$userId ORDER BY id DESC LIMIT 0,5;";
 	$messageList  = Connection::getConnection()->query($messageQuery);
 ?>
 
