@@ -150,10 +150,10 @@ form {
   width: 100%; }
 #thread #thread-more {
   display: flex;
-  justify-content: space-between;
-  margin-top: 24px; }
+  justify-content: space-between; }
   #thread #thread-more #thread-pagination {
-    list-style: none; }
+    list-style: none;
+    margin-top: 24px; }
     #thread #thread-more #thread-pagination li {
       display: inline-block; }
       #thread #thread-more #thread-pagination li a {
