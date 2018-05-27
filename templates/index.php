@@ -9,8 +9,12 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" />
 	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
 	<link rel="stylesheet" href="assets/css/style.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+	<script src="https://code.angularjs.org/1.6.10/angular-resource.min.js"></script>
+	<script src="app/modules/thread.module.js"></script>
+	<script src="app/modules/forAll.module.js"></script>
 </head>
-<body>
+<body ng-app="forAll">
 	<div id="wrapper">
 		<header id="header">
 
