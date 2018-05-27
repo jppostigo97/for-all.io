@@ -11,6 +11,8 @@
 	<link rel="stylesheet" href="assets/css/style.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
 	<script src="https://code.angularjs.org/1.6.10/angular-resource.min.js"></script>
+	<script src="https://code.angularjs.org/1.6.10/angular-route.min.js"></script>
+	<script src="app/modules/admin.module.js"></script>
 	<script src="app/modules/thread.module.js"></script>
 	<script src="app/modules/forAll.module.js"></script>
 </head>
@@ -63,7 +65,7 @@
 
 						<?php if (isset($_SESSION["level"]) && $_SESSION["level"] == "admin"): ?>
 							<li>
-								<a href="admin">
+								<a href="admin/index">
 									<span>
 										<i class="fas fa-lg fa-fw fa-cogs"></i>
 									</span>
