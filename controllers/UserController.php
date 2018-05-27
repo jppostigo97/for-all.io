@@ -199,12 +199,27 @@
 						// Contraseñas coinciden y ni el usuario ni el email están en uso: registrar
 						// Aplicar rol de usuario predeterminado
 						$defaultRoleQuery =
-							"SELECT * cvalue as value FROM config WHERE ckey='def_role';";
-						$query = "INSERT INTO user (email, nick, password) VALUES('" .
-							$email . "', '" .
-							$username . "', '" .
-							$password . "');";
+							"SELECT cvalue as value FROM config WHERE ckey='def_role';";
 
+						$defaultRole = Connection::getConnection()->query($defaultRoleQuery);
+
+						if ($defaultRole) {
+							$defaultRole = $defaultRole->fetch_assoc()["value"];
+							$defaultRole = Connection::getConnection()->query("SELECT id FROM user_role WHERE slug='" .
+								$defaultRole . "';")->fetch_assoc()["id"];
+
+							$query = "INSERT INTO user (email, nick, password, level) VALUES('" .
+								$email . "', '" .
+								$username . "', '" .
+								$password . "', " .
+								$defaultRole . ");";
+						} else {
+							$query = "INSERT INTO user (email, nick, password) VALUES('" .
+								$email . "', '" .
+								$username . "', '" .
+								$password . "');";
+						}
+						
 						$registered = Connection::getConnection()->query($query);
 
 						if ($registered) {
