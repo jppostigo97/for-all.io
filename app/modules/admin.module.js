@@ -1,12 +1,19 @@
 angular.module("forAll.admin", ["ngRoute"])
 
-.config(["$routeProvider", function($routeProvider) {
+.config(function($locationProvider, $routeProvider) {
+
+	$locationProvider.html5Mode({
+		enabled: false,
+		requireBase: false,
+		rewriteLinks: false
+	}).hashPrefix("");
 
 	$routeProvider
-	.when("/config",  { template: "<admin-config></admin-config>"})
-	.when("/forums",  { template: "<admin-forums></admin-forums>"})
-	.when("/threads", { template: "<admin-threads></admin-threads>"})
-	.when("/users",   { template: "<admin-users></admin-users>"})
-	.otherwhise("/config");
-}])
+	.when("/",  { template: "<adm-config></adm-config>"})
+	.when("/config",  { template: "<adm-config></adm-config>"})
+	.when("/forums",  { template: "<adm-forums></adm-forums>"})
+	.when("/threads", { template: "<adm-threads></adm-threads>"})
+	.when("/users",   { template: "<adm-users></adm-users>"})
+	.otherwise("/");
+})
 ;
