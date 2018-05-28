@@ -1,1 +1,1 @@
-angular.module("forAll", ["forAll.thread"]);
+angular.module("forAll", ["forAll.admin", "forAll.thread"]);
