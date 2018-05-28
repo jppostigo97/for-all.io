@@ -23,6 +23,40 @@
 			exit;
 		}
 
+		public function default_role() {
+			$q = "SELECT cvalue FROM config WHERE ckey='def_role';";
+			$default = Connection::getConnection()->query($q);
+
+			$result = [];
+
+			if ($default) {
+				$result = [
+					"value" => $default->fetch_assoc()["cvalue"]
+				];
+			} else {
+				$result = [
+					"status" => "error",
+					"error"  => "no-role"
+				];
+			}
+
+			self::print_json($result);
+		}
+
+		public function roles() {
+			$roles = Connection::getConnection()->query("SELECT slug, name FROM user_role");
+			$result = [];
+			if ($roles) {
+				while ($role = $roles->fetch_assoc()) {
+					$result[] = $role;
+				}
+			} else {
+				$result = ["status" => "error", "error" => "no-roles"];
+			}
+
+			self::print_json($result);
+		}
+
 		public function messages($thread, $page = 1) {
 			$t = $thread + 0;
 			$p = (($page - 1) * 2);
