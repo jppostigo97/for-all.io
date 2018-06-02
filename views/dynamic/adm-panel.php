@@ -8,12 +8,12 @@
 			</li>
 			<li>
 				<a href="admin/index#/forums">
-					Foros y subforos
+					Foros
 				</a>
 			</li>
 			<li>
 				<a href="admin/index#/threads">
-					Hilos y mensajes
+					Hilos
 				</a>
 			</li>
 			<li>
