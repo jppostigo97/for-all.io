@@ -297,3 +297,19 @@ form {
 		}
 	}
 }
+
+#admin-threads {
+
+	.thread {
+		display: grid;
+		grid-column-gap: 1em;
+		grid-template-columns: 1fr 64px;
+		margin-bottom: 24px;
+
+		button.delete { margin: 0; }
+
+		.thread-more-info {
+			padding-left: 10px;
+		}
+	}
+}

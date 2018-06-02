@@ -202,6 +202,16 @@ form {
       #profile #activity {
         grid-template-columns: 1fr 1fr; } }
 
+#admin-threads .thread {
+  display: grid;
+  grid-column-gap: 1em;
+  grid-template-columns: 1fr 64px;
+  margin-bottom: 24px; }
+  #admin-threads .thread button.delete {
+    margin: 0; }
+  #admin-threads .thread .thread-more-info {
+    padding-left: 10px; }
+
 a {
   color: #EE22AA;
   text-decoration: none;
@@ -282,9 +292,28 @@ nav#navbar {
   margin: 0px 14px;
   padding: 10px 20px; }
 
+.pointer {
+  cursor: pointer; }
+
+@media screen and (max-width: 960px) {
+  .table {
+    max-width: 96vw; }
+    .table table {
+      border-collapse: collapse;
+      display: block;
+      margin: auto;
+      max-width: 100%;
+      overflow-x: auto;
+      width: fit-content; } }
+
 .profile-pic {
   border-radius: 50%;
   height: 64px;
   width: 64px; }
+
+#user-list .fa-check {
+  color: #00DD55; }
+#user-list .fa-times {
+  color: #DD0000; }
 
 /*# sourceMappingURL=style.css.map */
