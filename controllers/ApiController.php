@@ -23,6 +23,156 @@
 			exit;
 		}
 
+		public function ban_user($id) {
+			$q = "SELECT * FROM user WHERE id=${id};";
+
+			$result = [];
+
+			if ($users = Connection::getConnection()->query($q)) {
+				$user = $users->fetch_assoc();
+
+				$newActive = ($user["active"] == 0)? 1 : 0;
+
+				$query = "UPDATE user SET active=${newActive} WHERE id=${id};";
+
+				if (Connection::getConnection()->query($query)) {
+					$result = [
+						"banned" => ($user["active"] == 0)? "false" : "true"
+					];
+				} else {
+					$result = [
+						"status" => "error",
+						"error"  => "cant-modify"
+					];
+				}
+			} else {
+				$result = [
+					"status" => "error",
+					"error"  => "no-user"
+				];
+			}
+
+			self::print_json($result);
+		}
+
+		public function users() {
+			$q = "SELECT user.id, user.email, user.nick, user.reg_date, user.last_connection, " .
+				"user.verified, user.active, user_role.name as role " .
+				"FROM user JOIN user_role ON user.level=user_role.id;";
+			
+			$users = Connection::getConnection()->query($q);
+
+			$result = [];
+
+			if ($users) {
+				while ($u = $users->fetch_assoc()) $result[] = $u;
+			} else {
+				$result = [
+					"status" => "error",
+					"error"  => "no-users"
+				];
+			}
+
+			self::print_json($result);
+		}
+
+		public function forums() {
+			$q = "SELECT id, title, description, ordered FROM forum ORDER BY ordered;";
+
+			$forums = Connection::getConnection()->query($q);
+
+			$result = [];
+
+			if ($forums) {
+				while ($f = $forums->fetch_assoc()) $result[] = $f;
+			} else {
+				$result = [
+					"status" => "error",
+					"error"  => "no-forums"
+				];
+			}
+
+			self::print_json($result);
+		}
+
+		public function subforums($forum = 0) {
+			$result = [];
+
+			if ($forum != 0) {
+				$q = "SELECT id, title, description, ordered FROM subforum WHERE forum=${forum} " .
+					"ORDER BY ordered;";
+
+				$subforums = Connection::getConnection()->query($q);
+
+				if ($subforums) {
+					while ($s = $subforums->fetch_assoc()) $result[] = $s;
+				} else {
+					$result = [
+						"status" => "error",
+						"error"  => "no-subforums"
+					];
+				}
+			} else {
+				$result = [
+					"status" => "error",
+					"error"  => "no-forum"
+				];
+			}
+
+			self::print_json($result);
+		}
+
+		public function threads() {
+			$result = [];
+
+			// FIXME: esta consulta presenta fallos. No recupera lastPost ni lastPostAuthor
+			$q = "SELECT thread.id as id, thread.title as title, " .
+				"thread.date_created as creation, " .
+				"(SELECT date_created FROM message WHERE thread=id ORDER BY id DESC) " .
+				"as lastPost, " .
+				"(SELECT nick FROM user WHERE id IN " .
+				"(SELECT author FROM message WHERE thread=id ORDER BY id DESC)) " .
+				"as lastPostAuthor, user.nick as author, " .
+				"subforum.id as subforum, subforum.title as subforumTitle FROM thread ".
+				"LEFT JOIN user ON thread.creator=user.id " .
+				"LEFT JOIN subforum ON thread.subforum=subforum.id " .
+				"ORDER BY creation DESC LIMIT 50;";
+			
+			$threads = Connection::getConnection()->query($q);
+
+			echo Connection::getConnection()->error;
+
+			if ($threads) {
+				while ($t = $threads->fetch_assoc()) $result[] = $t;
+			} else {
+				$result = [
+					"status" => "error",
+					"error"  => "no-threads"
+				];
+			}
+			
+			self::print_json($result);
+		}
+
+		public function delete_thread($threadId) {
+			$result = [];
+
+			$q = "DELETE FROM thread WHERE id=${threadId};";
+
+			if (Connection::getConnection()->query($q)) {
+				$result = [
+					"deleted" => "true"
+				];
+			} else {
+				$result = [
+					"status" => "error",
+					"error"  => "cant-delete"
+				];
+			}
+
+			self::print_json($result);
+		}
+
 		public function default_role() {
 			$q = "SELECT cvalue FROM config WHERE ckey='def_role';";
 			$default = Connection::getConnection()->query($q);
@@ -44,12 +194,10 @@
 		}
 
 		public function roles() {
-			$roles = Connection::getConnection()->query("SELECT slug, name FROM user_role");
+			$roles = Connection::getConnection()->query("SELECT id, slug, name FROM user_role");
 			$result = [];
 			if ($roles) {
-				while ($role = $roles->fetch_assoc()) {
-					$result[] = $role;
-				}
+				while ($role = $roles->fetch_assoc()) $result[] = $role;
 			} else {
 				$result = ["status" => "error", "error" => "no-roles"];
 			}
