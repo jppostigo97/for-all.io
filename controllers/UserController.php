@@ -15,6 +15,9 @@
 				if ($user->num_rows) {
 					$user = $user->fetch_assoc();
 
+					Application::$subtitle = "editProfile";
+					Application::$param    = "\"" . $user["nick"] . "\"";
+
 					View::load("edit-profile", [
 						"user"  => $user["nick"],
 						"email" => $user["email"],
