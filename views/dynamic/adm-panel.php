@@ -3,22 +3,22 @@
 		<ul>
 			<li>
 				<a href="admin/index#/config">
-					Configuración
+					<i class="fa fa-fw fa-lg fa-cog"></i>
 				</a>
 			</li>
 			<li>
 				<a href="admin/index#/forums">
-					Foros
+					<i class="fa fa-fw fa-lg fa-comments"></i>
 				</a>
 			</li>
 			<li>
 				<a href="admin/index#/threads">
-					Hilos
+					<i class="fa fa-fw fa-lg fa-comment-alt"></i>
 				</a>
 			</li>
 			<li>
 				<a href="admin/index#/users">
-					Usuarios
+					<i class="fa fa-fw fa-lg fa-users"></i>
 				</a>
 			</li>
 		</ul>
