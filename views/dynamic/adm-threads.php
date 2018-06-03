@@ -1,4 +1,6 @@
 <div id="admin-threads">
+	<h2>Hilos</h2>
+	
 	<div class="thread" ng-repeat="thread in $ctrl.threads">
 
 		<div class="thread-info">

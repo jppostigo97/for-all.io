@@ -1,4 +1,5 @@
 <div id="admin-users">
+	<h2>Usuarios</h2>
 
 	<div class="table">
 		<table id="user-list">
