@@ -18,9 +18,10 @@
 	<script src="app/modules/admin.module.js"></script>
 	<script src="app/modules/thread.module.js"></script>
 	<script src="app/modules/forAll.module.js"></script>
-
+	
 	<script src="app/filters/date.filter.js"></script>
-
+	
+	<script src="app/components/modal.forAll.js"></script>
 	<script src="app/components/thread.messageList.js"></script>
 </head>
 <body ng-app="forAll">
