@@ -76,6 +76,40 @@
 			self::print_json($result);
 		}
 
+		public function create_forum() {
+			$result = [];
+
+			if (isset($_POST["title"]) && isset($_POST["description"])) {
+				$t = Connection::getConnection()->real_escape_string($title);
+				$d = Connection::getConnection()->real_escape_string($description);
+
+				$q = "INSERT INTO forum (title, description) VALUES ('${t}', '${d}');";
+				
+				if (Connection::getConnection()->query($q)) {
+
+					$newId = Connection::getConnection()->
+						query("SELECT id FROM forum ORDER BY id DESC;")->fetch_assoc()["id"];
+					
+					$result = [
+						"status"       => "ok",
+						"new_forum_id" => $newId
+					];
+				} else {
+					$result = [
+						"status" => "error",
+						"error"  => "cant-create-forum"
+					];
+				}
+			} else {
+				$result = [
+					"status" => "error",
+					"error"  => "no-params"
+				];
+			}
+
+			self::print_json($result);
+		}
+
 		public function forums() {
 			$q = "SELECT id, title, description, ordered FROM forum ORDER BY ordered;";
 
