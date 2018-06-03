@@ -80,20 +80,14 @@
 			$result = [];
 
 			if (isset($_POST["title"]) && isset($_POST["description"])) {
-				$t = Connection::getConnection()->real_escape_string($title);
-				$d = Connection::getConnection()->real_escape_string($description);
+				$t = Connection::getConnection()->real_escape_string($_POST["title"]);
+				$d = Connection::getConnection()->real_escape_string($_POST["description"]);
 
 				$q = "INSERT INTO forum (title, description) VALUES ('${t}', '${d}');";
 				
 				if (Connection::getConnection()->query($q)) {
-
-					$newId = Connection::getConnection()->
-						query("SELECT id FROM forum ORDER BY id DESC;")->fetch_assoc()["id"];
-					
-					$result = [
-						"status"       => "ok",
-						"new_forum_id" => $newId
-					];
+					header("Location: ../admin/index#/forums");
+					exit;
 				} else {
 					$result = [
 						"status" => "error",
@@ -123,6 +117,46 @@
 				$result = [
 					"status" => "error",
 					"error"  => "no-forums"
+				];
+			}
+
+			self::print_json($result);
+		}
+
+		public function create_subforum() {
+			$result = [];
+
+			if (isset($_POST["title"]) && isset($_POST["description"]) && isset($_POST["forum"])) {
+				$t = Connection::getConnection()->real_escape_string($_POST["title"]);
+				$d = Connection::getConnection()->real_escape_string($_POST["description"]);
+
+				$forum = $_POST["forum"];
+
+				$checkForumQuery = "SELECT id FROM forum WHERE id=${forum};";
+
+				if (Connection::getConnection()->query($checkForumQuery)) {
+					$q = "INSERT INTO subforum (title, description, forum) VALUES ('${t}', '${d}', ${forum});";
+
+					if (Connection::getConnection()->query($q)) {
+						$result = [
+							"status" => "ok"
+						];
+					} else {
+						$result = [
+							"status" => "error",
+							"error"  => "cant-create"
+						];
+					}
+				} else {
+					$result = [
+						"status" => "error",
+						"error"  => "no-forum"
+					];
+				}
+			} else {
+				$result = [
+					"status" => "error",
+					"error"  => "no-params"
 				];
 			}
 
