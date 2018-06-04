@@ -123,6 +123,49 @@
 			self::print_json($result);
 		}
 
+		public function edit_forum($forumId) {
+			$result = [];
+			$checkForumQuery = "SELECT id FROM forum WHERE id = ${forumId};";
+
+			if (Connection::getConnection()->query($checkForumQuery)) {
+				// Params
+				$newTitle = (isset($_POST["title"]))?
+					Connection::getConnection()->real_escape_string($_POST["title"]) : null;
+				$newDescription = (isset($_POST["description"]))?
+					Connection::getConnection()->real_escape_string($_POST["description"]) : null;
+
+				$query = "UPDATE forum SET ";
+
+				if ($newTitle != null) $query .= "title='${newTitle}'";
+				if ($newTitle != null && $newDescription != null) $query .= ", ";
+				if ($newDescription != null) $query .= "description='${newDescription}'";
+
+				$query .= " WHERE id=${forumId};";
+
+				if ($newTitle != null || $newDescription != null) {
+					if (Connection::getConnection()->query($query)) {
+						$result = ["edited" => "true"];
+					} else {
+						$result = [
+							"status" => "error",
+							"error"  => "cant-edit"
+						]
+					}
+				} else {
+					$result = [
+						"status" => "error",
+						"erorr"  => "no-params"
+					];
+				}
+
+			} else {
+				$result = [
+					"status" => "error",
+					"error"  => "no-forum"
+				];
+			}
+		}
+
 		public function create_subforum() {
 			$result = [];
 
@@ -188,6 +231,50 @@
 			}
 
 			self::print_json($result);
+		}
+
+		public function edit_subforum($subforumId) {
+			$result = [];
+			$checkSubforumQuery = "SELECT id FROM subforum WHERE id=${subforumId};";
+
+			if (Connection::getConnection()->query($checkSubforumQuery)) {
+				// Params
+				$newTitle = isset($_POST["title"])?
+					Connection::getConnection()->real_escape_string($_POST["title"]) : null;
+				$newDescription = isset($_POST["description"])?
+					Connection::getConnection()->real_escape_string($_POST["description"]) : null;
+
+				$query = "UPDATE subforum SET ";
+
+				if ($newTitle != null) $query .= "title = '${newTitle}'";
+				if ($newTitle != null && $newDescription != null) $query .= ", ";
+				if ($newDescription != null) $query .= "description = '${newDescription}'";
+
+				$query .= " WHERE id = ${subforumId};";
+
+				if ($newTitle != null || $newDescription != null) {
+					if (Connection::getConnection()->query($query)) {
+						$result = [
+							"edited" => "true"
+						];
+					} else {
+						$result = [
+							"status" => "error",
+							"error"  => "cant-edit"
+						];
+					}
+				} else {
+					$result = [
+						"status" => "error",
+						"error"  => "no-params"
+					];
+				}
+			} else {
+				$result = [
+					"status" => "error",
+					"error"  => "no-subforum"
+				];
+			}
 		}
 
 		public function threads() {
