@@ -1,6 +1,8 @@
 angular.module("forAll")
 	.component("modalOpener", {
-		template: "<button ng-click='$ctrl.openModal()' class='modal-opener'>{{ $ctrl.text }}</button>",
+		template: "<button ng-click='$ctrl.openModal()' class='modal-opener'>" +
+			"<ng-transclude></ng-transclude></button>",
+		transclude: true,
 		controller: function() {
 
 			this.openModal = () => {
@@ -19,7 +21,6 @@ angular.module("forAll")
 			};
 		},
 		bindings: {
-			text: "@",
 			target: "@"
 		}
 	});
