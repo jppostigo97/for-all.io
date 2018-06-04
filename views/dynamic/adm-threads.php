@@ -18,13 +18,7 @@
 		</button>
 		
 		<div class="thread-more-info">
-			Fecha: {{ thread.creation | datefilter }}
-			
-			<span ng-if="thread.lastPost != null && thread.lastPostAuthor != null">
-				|
-				Último mensaje : {{ thread.lastPost | datefilter }}
-				por <a href="forum/show/{{ thread.lastPostAuthor }}">{{ thread.lastPostAuthor }}</a>
-			</span>
+			Fecha: {{ thread.creation | datefilter }} - {{ thread.creation | timefilter }}
 		</div>
 
 	</div>
