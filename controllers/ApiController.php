@@ -149,7 +149,7 @@
 						$result = [
 							"status" => "error",
 							"error"  => "cant-edit"
-						]
+						];
 					}
 				} else {
 					$result = [
@@ -282,12 +282,7 @@
 
 			// FIXME: esta consulta presenta fallos. No recupera lastPost ni lastPostAuthor
 			$q = "SELECT thread.id as id, thread.title as title, " .
-				"thread.date_created as creation, " .
-				"(SELECT date_created FROM message WHERE thread=id ORDER BY id DESC) " .
-				"as lastPost, " .
-				"(SELECT nick FROM user WHERE id IN " .
-				"(SELECT author FROM message WHERE thread=id ORDER BY id DESC)) " .
-				"as lastPostAuthor, user.nick as author, " .
+				"thread.date_created as creation, user.nick as author, " .
 				"subforum.id as subforum, subforum.title as subforumTitle FROM thread ".
 				"LEFT JOIN user ON thread.creator=user.id " .
 				"LEFT JOIN subforum ON thread.subforum=subforum.id " .
