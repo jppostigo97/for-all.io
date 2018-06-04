@@ -202,6 +202,19 @@ form {
       #profile #activity {
         grid-template-columns: 1fr 1fr; } }
 
+#admin-forums .forum {
+  display: grid;
+  grid-template-areas: "t t t t t a" "s s s s s s" "c c c c c c"; }
+  #admin-forums .forum .forum-title {
+    grid-area: t; }
+  #admin-forums .forum .forum-description {
+    grid-area: s; }
+  #admin-forums .forum .action-buttons {
+    grid-area: a;
+    text-align: right; }
+  #admin-forums .forum .forum-subforums {
+    grid-area: c; }
+
 #admin-threads .thread {
   display: grid;
   grid-column-gap: 1em;
