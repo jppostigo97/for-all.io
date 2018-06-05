@@ -300,26 +300,10 @@ form {
 
 #admin-forums {
 	.forum {
-		display: grid;
-		grid-template-areas: "t t t t t a"
-							 "s s s s s s"
-							 "c c c c c c";
-		
-		.forum-title {
-			grid-area: t;
-		}
-
-		.forum-description {
-			grid-area: s;
-		}
-
-		.action-buttons {
-			grid-area: a;
-			text-align: right;
-		}
-
 		.forum-subforums {
-			grid-area: c;
+			.subforum {
+				margin-bottom: 18px;
+			}
 		}
 	}
 }
