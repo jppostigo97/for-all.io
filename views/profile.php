@@ -4,7 +4,7 @@
 		"JOIN subforum ON thread.subforum=subforum.id WHERE thread.creator=$userId;";
 	$threadList  = Connection::getConnection()->query($threadQuery);
 
-	$messageQuery = "SELECT * FROM message WHERE author=$userId ORDER BY id DESC LIMIT 0,5;";
+	$messageQuery = "SELECT * FROM message JOIN thread ON message.thread = thread.id WHERE message.author=$userId ORDER BY message.id DESC LIMIT 0,5;";
 	$messageList  = Connection::getConnection()->query($messageQuery);
 ?>
 
@@ -58,6 +58,8 @@
 								else echo $msg["content"];
 
 							?>
+							&gt;
+							<a href="forum/show/<?= $msg["thread"] ?>"><?= $msg["title"] ?></a>
 							<br />
 							<a class="read-more btn" href="thread/show/<?= $msg["thread"] ?>">
 								Seguir leyendo
