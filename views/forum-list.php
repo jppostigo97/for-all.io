@@ -1,4 +1,4 @@
-<?php $forumList = Connection::getConnection()->query("SELECT * FROM forum ORDER BY ordered;"); ?>
+<?php $forumList = Connection::getConnection()->query("SELECT * FROM forum ORDER BY title;"); ?>
 
 <?php if ($forumList->num_rows): ?>
 
@@ -11,7 +11,7 @@
 
 				<?php $subforumList = Connection::getConnection()
 					->query("SELECT * FROM subforum WHERE forum=" . $forum["id"] .
-					" ORDER BY ordered;"); ?>
+					" ORDER BY title;"); ?>
 				
 				<?php if ($subforumList->num_rows): ?>
 
