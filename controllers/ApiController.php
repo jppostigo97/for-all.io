@@ -105,7 +105,7 @@
 		}
 
 		public function forums() {
-			$q = "SELECT id, title, description, ordered FROM forum ORDER BY ordered;";
+			$q = "SELECT id, title, description, ordered FROM forum ORDER BY title;";
 
 			$forums = Connection::getConnection()->query($q);
 
@@ -144,7 +144,8 @@
 
 				if ($newTitle != null || $newDescription != null) {
 					if (Connection::getConnection()->query($query)) {
-						$result = ["edited" => "true"];
+						header("Location: ../../admin/index#/forums");
+						exit;
 					} else {
 						$result = [
 							"status" => "error",
@@ -166,14 +167,39 @@
 			}
 		}
 
-		public function create_subforum() {
+		public function delete_forum($forumId) {
+			$result = [];
+			$checkForumQuery = "SELECT id FROM forum WHERE id = ${forumId};";
+
+			if (Connection::getConnection()->query($checkForumQuery)) {
+				$q = "DELETE FROM forum WHERE id = ${forumId};";
+
+				if (Connection::getConnection()->query($q)) {
+					$result = [
+						"deleted" => "true"
+					];
+				} else {
+					$result = [
+						"status" => "error",
+						"error"  => "cant-delete"
+					];
+				}
+			} else {
+				$result = [
+					"status" => "error",
+					"error"  => "no-forum"
+				];
+			}
+
+			self::print_json($result);
+		}
+
+		public function create_subforum($forum = 0) {
 			$result = [];
 
-			if (isset($_POST["title"]) && isset($_POST["description"]) && isset($_POST["forum"])) {
+			if (isset($_POST["title"]) && isset($_POST["description"]) && $forum != 0) {
 				$t = Connection::getConnection()->real_escape_string($_POST["title"]);
 				$d = Connection::getConnection()->real_escape_string($_POST["description"]);
-
-				$forum = $_POST["forum"];
 
 				$checkForumQuery = "SELECT id FROM forum WHERE id=${forum};";
 
@@ -181,9 +207,8 @@
 					$q = "INSERT INTO subforum (title, description, forum) VALUES ('${t}', '${d}', ${forum});";
 
 					if (Connection::getConnection()->query($q)) {
-						$result = [
-							"status" => "ok"
-						];
+						header("Location: ../../admin/index#/forums");
+						exit;
 					} else {
 						$result = [
 							"status" => "error",
@@ -211,7 +236,7 @@
 
 			if ($forum != 0) {
 				$q = "SELECT id, title, description, ordered FROM subforum WHERE forum=${forum} " .
-					"ORDER BY ordered;";
+					"ORDER BY title;";
 
 				$subforums = Connection::getConnection()->query($q);
 
@@ -254,9 +279,8 @@
 
 				if ($newTitle != null || $newDescription != null) {
 					if (Connection::getConnection()->query($query)) {
-						$result = [
-							"edited" => "true"
-						];
+						header("Location: ../../admin/index#/forums");
+						exit;
 					} else {
 						$result = [
 							"status" => "error",
@@ -277,10 +301,36 @@
 			}
 		}
 
+		public function delete_subforum($subforumId) {
+			$result = [];
+			$checkSubforumQuery = "SELECT id FROM subforum WHERE id = ${subforumId};";
+
+			if (Connection::getConnection()->query($checkSubforumQuery)) {
+				$q = "DELETE FROM subforum WHERE id = ${subforumId};";
+
+				if (Connection::getConnection()->query($q)) {
+					$result = [
+						"deleted" => "true"
+					];
+				} else {
+					$result = [
+						"status" => "error",
+						"error"  => "cant-delete"
+					];
+				}
+			} else {
+				$result = [
+					"status" => "error",
+					"error"  => "no-subforum"
+				];
+			}
+
+			self::print_json($result);
+		}
+
 		public function threads() {
 			$result = [];
-
-			// FIXME: esta consulta presenta fallos. No recupera lastPost ni lastPostAuthor
+			
 			$q = "SELECT thread.id as id, thread.title as title, " .
 				"thread.date_created as creation, user.nick as author, " .
 				"subforum.id as subforum, subforum.title as subforumTitle FROM thread ".
