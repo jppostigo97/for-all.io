@@ -59,7 +59,7 @@
 			$q = "SELECT user.id, user.email, user.nick, user.reg_date, user.last_connection, " .
 				"user.verified, user.active, user_role.name as role " .
 				"FROM user JOIN user_role ON user.level=user_role.id;";
-			
+
 			$users = Connection::getConnection()->query($q);
 
 			$result = [];
@@ -84,7 +84,7 @@
 				$d = Connection::getConnection()->real_escape_string($_POST["description"]);
 
 				$q = "INSERT INTO forum (title, description) VALUES ('${t}', '${d}');";
-				
+
 				if (Connection::getConnection()->query($q)) {
 					header("Location: ../admin/index#/forums");
 					exit;
@@ -105,7 +105,7 @@
 		}
 
 		public function forums() {
-			$q = "SELECT id, title, description, ordered FROM forum ORDER BY title;";
+			$q = "SELECT id, title, description FROM forum ORDER BY title;";
 
 			$forums = Connection::getConnection()->query($q);
 
@@ -235,7 +235,7 @@
 			$result = [];
 
 			if ($forum != 0) {
-				$q = "SELECT id, title, description, ordered FROM subforum WHERE forum=${forum} " .
+				$q = "SELECT id, title, description FROM subforum WHERE forum=${forum} " .
 					"ORDER BY title;";
 
 				$subforums = Connection::getConnection()->query($q);
@@ -330,14 +330,14 @@
 
 		public function threads() {
 			$result = [];
-			
+
 			$q = "SELECT thread.id as id, thread.title as title, " .
 				"thread.date_created as creation, user.nick as author, " .
 				"subforum.id as subforum, subforum.title as subforumTitle FROM thread ".
 				"LEFT JOIN user ON thread.creator=user.id " .
 				"LEFT JOIN subforum ON thread.subforum=subforum.id " .
 				"ORDER BY creation DESC LIMIT 50;";
-			
+
 			$threads = Connection::getConnection()->query($q);
 
 			echo Connection::getConnection()->error;
@@ -350,7 +350,7 @@
 					"error"  => "no-threads"
 				];
 			}
-			
+
 			self::print_json($result);
 		}
 

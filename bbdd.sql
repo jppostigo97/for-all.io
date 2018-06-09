@@ -37,8 +37,7 @@ CREATE TABLE forum (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	title VARCHAR(50) NOT NULL,
 	description TEXT,
-	date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	ordered INT(2) DEFAULT 1
+	date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 /** Subcategoría / Subforo */
@@ -48,7 +47,6 @@ CREATE TABLE subforum (
 	title VARCHAR(50) NOT NULL,
 	description TEXT,
 	date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	ordered INT(2) DEFAULT 1,
 	FOREIGN KEY (forum) REFERENCES forum(id) ON DELETE CASCADE
 );
 
