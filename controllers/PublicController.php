@@ -26,17 +26,7 @@
 			echo "El token usuario proporcionado no es válido.";
 			exit;
 		}
-
-		/**
-		 * forum
-		 * message
-		 * subforum
-		 * thread
-		 * user
-		 */
-
-		// TODO: calcar el método de obtener foros para sacar subforos, usuarios, hilos y mensajes
-
+		
 		public function forum($token, $id = 0) {
 			if (isset($token) && self::grantPermission($token)) {
 				if ($id == 0) {
@@ -54,7 +44,7 @@
 				} elseif ($id > 0) {
 					$q = "SELECT id, title, description FROM forum " .
 						"WHERE id = ${id} ORDER BY title;";
-					
+
 					$result = Connection::getConnection()->query($q);
 
 					if ($result && $result->num_rows) {
@@ -97,11 +87,11 @@
 				self::showTokenError();
 			}
 		}
-		
+
 		public function subforum($token, $id = 0) {
 			if (isset($token) && self::grantPermission($token)) {
 				if ($id > 0) {
-					$q = "SELECT subforum.id, subforum.title, subforum.description, " . 
+					$q = "SELECT subforum.id, subforum.title, subforum.description, " .
 						"forum.title as forum FROM subforum " .
 						"JOIN forum ON subforum.forum = forum.id " .
 						"WHERE subforum.id = ${id};";
@@ -120,7 +110,7 @@
 				self::showTokenError();
 			}
 		}
-		
+
 		public function thread($token, $id = 0) {
 			if (isset($token) && self::grantPermission($token)) {
 				if ($id > 0) {
@@ -146,7 +136,7 @@
 				self::showTokenError();
 			}
 		}
-		
+
 		public function user($token, $id = 0) {
 			if (isset($token) && self::grantPermission($token)) {
 				if ($id > 0) {

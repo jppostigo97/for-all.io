@@ -88,7 +88,6 @@
 							. "', " .
 							$_SESSION["id"]
 							. ");";
-						// TODO: insertar nuevo mensaje
 						if (Connection::getConnection()->query($query)) {
 							header("Location: ../thread/show/" . $_POST["thread_id"]);
 							exit;
