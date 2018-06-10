@@ -11,7 +11,7 @@
 		}
 
 		static private function grantPermission($token) {
-			$q = "SELECT id FROM user WHERE api_token = '${token}';";
+			$q = "SELECT id FROM user WHERE api_token = '${token}' AND verified = 1;";
 			$r = Connection::getConnection()->query($q);
 
 			return ($r && $r->num_rows)? true : false;
