@@ -150,7 +150,7 @@
 					$email  = Connection::getConnection()
 						->real_escape_string($_POST["login_email"]);
 					$result = Connection::getConnection()
-						->query("SELECT * FROM user WHERE email='${email}';");
+						->query("SELECT * FROM user WHERE email='${email}' AND verified = 1;");
 
 					if ($result->num_rows) {
 						$user = $result->fetch_assoc();
@@ -206,29 +206,41 @@
 
 						$defaultRole = Connection::getConnection()->query($defaultRoleQuery);
 
+						$verify_token = urlencode(sha1("${email}+${username}"));
+						$verify_url   = $_SERVER["SERVER_NAME"] . "/user/verify/${verify_token}";
+
 						if ($defaultRole) {
 							$defaultRole = $defaultRole->fetch_assoc()["value"];
 							$defaultRole = Connection::getConnection()->query("SELECT id FROM user_role WHERE slug='" .
 								$defaultRole . "';")->fetch_assoc()["id"];
 
-							$query = "INSERT INTO user (email, nick, password, level) VALUES('" .
+							$query = "INSERT INTO user (email, nick, password, level, api_token) VALUES('" .
 								$email . "', '" .
 								$username . "', '" .
 								$password . "', " .
-								$defaultRole . ");";
+								$defaultRole . ", '" .
+								$verify_token . "');";
 						} else {
-							$query = "INSERT INTO user (email, nick, password) VALUES('" .
+							$query = "INSERT INTO user (email, nick, password, api_token) VALUES('" .
 								$email . "', '" .
 								$username . "', '" .
-								$password . "');";
+								$password . "', '" .
+								$verify_token . "');";
 						}
-						
+
 						$registered = Connection::getConnection()->query($query);
 
 						if ($registered) {
-							// TODO: mandar email de validación al usuario al registrar con éxito
+
+							require_once "help/mailing.php";
+
 							$noRenderForm = true;
-							View::load("successful-registered");
+
+							if (isset($mailError)) {
+								View::load("successful-registered", [
+									"mail_error" => $mailError
+								]);
+							}
 						} else {
 							$error = "Se ha producido un error desconocido al registrarte.";
 						}
@@ -295,6 +307,33 @@
 				header("Location: ./account");
 				exit;
 			}
+		}
+
+		public function verify($token) {
+			if (isset($_SESSION["user"])) {
+				header("Location: ../");
+				exit;
+			} else {
+
+				$q = "SELECT id FROM user WHERE api_token = '${token}' AND verified = 0;";
+				$user = Connection::getConnection()->query($q);
+
+				if ($user && $user->num_rows) {
+					$u = $user->fetch_assoc()["id"];
+
+					$verifyQuery = "UPDATE user SET verified = 1 WHERE id = ${u};";
+					$verified = Connection::getConnection()->query($verifyQuery);
+
+					if ($verified) {
+						echo "Has verificado tu cuenta de usuario.<br /><a href=\"../../home/index\">Página de inicio</a>";
+					} else {
+						echo "Error.";
+					}
+				} else {
+					echo "El ususario a verificar no existe.";
+				}
+			}
+			exit;
 		}
 	}
 ?>
