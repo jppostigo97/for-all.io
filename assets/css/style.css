@@ -30,6 +30,9 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 110%;
         letter-spacing: 2px;
         line-height: 1.4; } }
+  #wrapper footer#footer {
+    font-family: monospace;
+    font-size: 108%; }
   @media screen and (min-width: 960px) {
     #wrapper {
       border-left: 4px solid #2A2A2A;

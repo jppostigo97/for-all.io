@@ -34,6 +34,11 @@ h1, h2, h3, h4, h5, h6 { margin: 16px 0px; }
 		}
 	}
 
+	footer#footer {
+		font-family: monospace;
+		font-size: 108%;
+	}
+
 	@media #{$break-lg} {
 		border-left: 4px solid $black;
 		border-right: 4px solid $black;
