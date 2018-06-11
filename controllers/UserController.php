@@ -211,17 +211,20 @@
 
 						if ($defaultRole) {
 							$defaultRole = $defaultRole->fetch_assoc()["value"];
-							$defaultRole = Connection::getConnection()->query("SELECT id FROM user_role WHERE slug='" .
-								$defaultRole . "';")->fetch_assoc()["id"];
+							$defaultRole = Connection::getConnection()->
+								query("SELECT id FROM user_role WHERE slug='${defaultRole}';")->
+								fetch_assoc()["id"];
 
-							$query = "INSERT INTO user (email, nick, password, level, api_token) VALUES('" .
+							$query = "INSERT INTO user (email, nick, password, level, api_token)" .
+								" VALUES('" .
 								$email . "', '" .
 								$username . "', '" .
 								$password . "', " .
 								$defaultRole . ", '" .
 								$verify_token . "');";
 						} else {
-							$query = "INSERT INTO user (email, nick, password, api_token) VALUES('" .
+							$query = "INSERT INTO user (email, nick, password, api_token) " .
+								"VALUES('" .
 								$email . "', '" .
 								$username . "', '" .
 								$password . "', '" .
@@ -231,6 +234,12 @@
 						$registered = Connection::getConnection()->query($query);
 
 						if ($registered) {
+
+							$emailConfig = [
+								"target"   => $email,
+								"template" => "confirm",
+								"title"    => "Confirma tu registro en ForAll.io"
+							];
 
 							require_once "help/mailing.php";
 
@@ -325,7 +334,8 @@
 					$verified = Connection::getConnection()->query($verifyQuery);
 
 					if ($verified) {
-						echo "Has verificado tu cuenta de usuario.<br /><a href=\"../../home/index\">Página de inicio</a>";
+						echo "Has verificado tu cuenta de usuario.<br />" .
+						"<a href=\"../../home/index\">Página de inicio</a>";
 					} else {
 						echo "Error.";
 					}
@@ -334,6 +344,70 @@
 				}
 			}
 			exit;
+		}
+
+		public function recover() {
+			if (!isset($_SESSION["user"])) {
+				$error = "";
+
+				if (isset($_POST["target_email"])) {
+					$targetEmail = Connection::getConnection()->
+						real_escape_string($_POST["target_email"]);
+					$q = "SELECT id FROM user WHERE email = '${targetEmail}';";
+
+					$result = Connection::getConnection()->query($q);
+
+					if ($result && $result->num_rows) {
+
+						$emailConfig = [
+							"target"   => $targetEmail,
+							"template" => "recover-password",
+							"title"    => "Recuperar credenciales ForAll.io"
+						];
+
+						// Preparar nueva contraseña
+						$possibleChars = [
+							"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+							"o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1",
+							"2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "-", "_"
+						];
+
+						$newPassword = "";
+
+						for ($i = 0; $i < 15; $i++) {
+							$newPassword .= $possibleChars[rand(0, (count($possibleChars)-1))];
+						}
+
+						$encPassword    = password_hash($newPassword, PASSWORD_DEFAULT);
+						$resetPasswordQ = "UPDATE user SET password = '${encPassword}' " .
+							"WHERE email = '${targetEmail}';";
+
+						if (Connection::getConnection()->query($resetPasswordQ)) {
+							require_once "help/mailing.php";
+							$error = $mailError;
+						} else {
+							$error = "Error inesperado al recuperar las credenciales.<br />" .
+								"Por favor, contacte con el administrador.";
+						}
+
+					} else {
+						$error = "No existe una cuenta vinculada a esa dirección de correo electrónico.";
+					}
+				}
+
+				if (isset($_POST["target_email"]) && $error == "") {
+					View::load("new-password-sent", [
+						"targetEmail" => $targetEmail
+					]);
+				} else {
+					View::load("recover-password", [
+						"error" => $error
+					]);
+				}
+			} else {
+				header("Location: ../");
+				exit;
+			}
 		}
 	}
 ?>

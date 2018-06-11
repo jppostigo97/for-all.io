@@ -21,10 +21,12 @@
 		<div class="form-field">
 			<label for="login_password">Contraseña</label>
 			<input type="password" name="login_password" id="login_password" required />
-			<!-- <input type="password" name="login_password" id="login_password" pattern="((?=(.*[a-z|A-Z].*))+(?=(.*(\W|[0-9]).*))+)(.){6,}" required /> -->
 		</div>
 		<div>
 			<button type="submit">Entra</button>
+		</div>
+		<div id="forgot-password">
+			<a href="user/recover">¿Has olvidado tu contraseña?</a>
 		</div>
 	</form>
 

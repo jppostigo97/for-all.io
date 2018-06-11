@@ -21,12 +21,9 @@
 	$mail->SetFrom("noreply.forall.io@gmail.com");
 
 	$mail->isHTML(true);
-	$mail->Subject = isset($_POST["email_title"])? $_POST["email_title"] : "Confirma tu cuenta - ForAll.io";
+	$mail->Subject = $emailConfig["title"];
 
-	$email_template = "templates/mail/";
-	if (isset($_POST["email_template"])) $email_template .= $_POST["email_template"];
-	else $email_template .= "confirm";
-	$email_template .= ".php";
+	$email_template = "templates/mail/" . $emailConfig["template"] . ".php";
 
 	ob_start();
 
@@ -35,7 +32,7 @@
 
 	ob_end_clean();
 
-	$mail->AddAddress(isset($_POST["reg_email"])? $_POST["reg_email"] : "");
+	$mail->AddAddress($emailConfig["target"]);
 
 	if (!$mail->Send())
 		$mailError = "No se ha podido enviar el correo electrónico de confirmación.";
