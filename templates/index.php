@@ -124,6 +124,12 @@
 			[[ forallio-content ]]
 		</div>
 
+		<footer id="footer">
+		
+			&copy; Juan Pedro Postigo 2018 - Licencia MIT
+
+		</footer>
+
 	</div>
 </body>
 </html>
