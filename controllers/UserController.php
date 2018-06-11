@@ -246,6 +246,11 @@
 							$noRenderForm = true;
 
 							if (isset($mailError)) {
+								
+								View::load("send-telegram-message", [
+									"message" => "¡Se ha registrado un nuevo usuario! Demos la bienvenida a ${username}"
+								]);
+
 								View::load("successful-registered", [
 									"mail_error" => $mailError
 								]);
