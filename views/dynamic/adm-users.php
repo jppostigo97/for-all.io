@@ -21,7 +21,7 @@
 					<td>{{ user.email }}</td>
 					<td>{{ user.role }}</td>
 					<td>{{ user.reg_date | datefilter }}</td>
-					<td>{{ user.last_connection | datefilter }}</td>
+					<td>{{ user.last_connection | datefilter }} - {{ user.last_connection | timefilter }}</td>
 					<td>
 						<i class="fa fa-lg fa-check" ng-if="user.verified != 0"></i>
 						<i class="fa fa-lg fa-times" ng-if="user.verified == 0"></i>

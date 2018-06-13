@@ -107,6 +107,15 @@
 		 * Ejecuta la acción.
 		 */
 		static public function run() {
+
+			// Actualizar la última conexión del usuario autenticado
+			if (isset($_SESSION["id"]) && !empty($_SESSION["id"])) {
+				$id = $_SESSION["id"];
+				$q = "UPDATE user SET last_connection = CURRENT_TIMESTAMP WHERE id = ${id};";
+
+				$updatedLastConnection = Connection::getConnection()->query($q);
+			}
+
 			$actionArray = [self::$controller, self::$action];
 			
 			if (!empty(self::$controller) &&
