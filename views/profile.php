@@ -75,7 +75,7 @@
 
 							?>
 							&gt;
-							<a href="forum/show/<?= $msg["thread"] ?>"><?= $msg["title"] ?></a>
+							<a href="thread/show/<?= $msg["thread"] ?>"><?= $msg["title"] ?></a>
 							<br />
 							<a class="read-more btn" href="thread/show/<?= $msg["thread"] ?>">
 								Seguir leyendo
