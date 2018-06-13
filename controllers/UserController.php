@@ -441,13 +441,15 @@
 						$possibleChars = [
 							"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
 							"o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1",
-							"2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "-", "_"
+							"2", "3", "4", "5", "6", "7", "8", "9", "0", " ", "_"
 						];
 
 						$newPassword = "";
 
-						for ($i = 0; $i < 15; $i++) {
-							$newPassword .= $possibleChars[rand(0, (count($possibleChars)-1))];
+						while (strpos($newPassword, " ") !== false ||
+							strpos($newPassword, "_") !== false) {
+							for ($i = 0; $i < 15; $i++) 
+								$newPassword .= $possibleChars[rand(0, (count($possibleChars)-1))];
 						}
 
 						$encPassword    = password_hash($newPassword, PASSWORD_DEFAULT);
