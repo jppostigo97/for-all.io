@@ -3,16 +3,21 @@
 	<h2>Editar perfil - [[ user ]] ([[ role ]])</h2>
 
 	<?php if (isset($error)): ?>
-		<div id="error">
+		<div class="error">
 			<?= $error ?>
 		</div>
 	<?php endif; ?>
 
-	<form action="user/validate_edition" method="POST">
+	<form action="user/validate_edition" method="POST" enctype="multipart/form-data">
 		
 		<div class="form-field">
 			<label for="newemail">Email</label>
 			<input type="email" name="newemail" value="[[ email ]]" />
+		</div>
+
+		<div class="form-field">
+			<label for="newprofilepic">Imagen de perfil</label>
+			<input type="file" name="newprofilepic" />
 		</div>
 
 		<div class="form-field">

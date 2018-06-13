@@ -3,7 +3,7 @@
 	<h2>Recuperar contraseña</h2>
 
 	<?php if ($error != ""): ?>
-		<div id="error"><?= $error ?></div>
+		<div class="error"><?= $error ?></div>
 	<?php endif; ?>
 
 	<form action="user/recover" method="POST">

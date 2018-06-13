@@ -275,7 +275,20 @@ form {
 	grid-template-areas: "u u u e"
 						 "a a a a";
 
-	#profile-info { grid-area: u; }
+	#profile-info {
+		display: grid;
+		grid-template-columns: 96px 1fr;
+		grid-gap: 1em;
+		grid-area: u;
+
+		.profile-username {
+			align-items: center;
+			display: flex;
+
+			h2 { margin: 0; }
+		}
+	}
+
 	#edit-profile {
 		grid-area: e;
 		text-align: right;

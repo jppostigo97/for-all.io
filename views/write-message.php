@@ -1,5 +1,5 @@
 <?php if (isset($error)): ?>
-	<div id="error">
+	<div class="error">
 		<?= $error ?>
 	</div>
 	<?php exit; ?>

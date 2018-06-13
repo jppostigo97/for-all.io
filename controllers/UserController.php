@@ -41,58 +41,120 @@
 				if (isset($_POST["password"])) {
 					if ($user) {
 						$user = $user->fetch_assoc();
+						
+						Application::$subtitle = "editProfile";
+						Application::$param    = "\"" . $user["nick"] . "\"";
 
 						if (password_verify($_POST["password"], $user["password"])) {
+
+							if (!empty($_FILES)) {
+
+								$canUpload = true;
+
+								$originalImg = $_FILES["newprofilepic"]["tmp_name"];
+
+								$targetDir = "assets/img/";
+								$targetImg = $targetDir . $_SESSION["user"] . ".jpg";
+
+								$extension = strtolower(pathinfo($_FILES["newprofilepic"]["name"], PATHINFO_EXTENSION));
+
+								if ($extension == "jpg" || $extension == "jpeg" || $extension == "png") {
+
+									$canUpload = getimagesize($originalImg);
+
+									if (move_uploaded_file($originalImg, $targetImg)) {
+
+										$exploded  = explode('.', $targetImg);
+										$extension = $exploded[count($exploded) - 1]; 
+
+										if ($extension != "jpg") {
+											if (preg_match('/png/i', $extension))
+												$imageTmp = imagecreatefrompng($targetImg);
+											else
+												$canUpload = false;
+	
+											if ($canUpload) {
+												imagejpeg($imageTmp, $targetImg, 80);
+												imagedestroy($imageTmp);
+											} else {
+												$imageUploadError = "No se ha podido convertir la imagen cargada.";
+											}
+										}
+									} else {
+										$imageUploadError = "No se ha podido subir la nueva imagen de perfil.";
+									}
+								} else {
+									$imageUploadError = "Solo se admiten imagenes con extensión .jpg, .jpeg y .png";
+								}
+							} else {
+								$uploadImage = false;
+							}
+
 							$builtQuery = "UPDATE user SET";
 
 							$execute = false;
 
-							if (isset($_POST["newemail"]) && $_POST["newemail"] != $user["email"]) {
-								$newEmailUsed = false;
-								$emailQuery   = "SELECT email FROM user WHERE email='" .
-									Connection::getConnection()
-										->real_escape_string($_POST["newemail"])
-									. "'";
-								$emailCheck = Connection::getConnection()->query($emailQuery);
-								$newEmailUsed = ($emailCheck->num_rows)? true : false;
-
-								if ($newEmailUsed) {
-									View::load("edit-profile", [
-										"user" => $user["nick"],
-										"email" => $user["email"],
-										"role"  => $user["role"],
-										"error" => "El email introducido ya está en uso."
-									]);
-								} else {
-									$builtQuery .= " email='" .
+							if (!isset($imageUploadError)) {
+								if (isset($_POST["newemail"]) && $_POST["newemail"] != $user["email"]) {
+									$newEmailUsed = false;
+									$emailQuery   = "SELECT email FROM user WHERE email='" .
 										Connection::getConnection()
 											->real_escape_string($_POST["newemail"])
-										."'";
-									$execute = true;
+										. "'";
+									$emailCheck = Connection::getConnection()->query($emailQuery);
+									$newEmailUsed = ($emailCheck->num_rows)? true : false;
+	
+									if ($newEmailUsed) {
+										View::load("edit-profile", [
+											"user" => $user["nick"],
+											"email" => $user["email"],
+											"role"  => $user["role"],
+											"error" => "El email introducido ya está en uso."
+										]);
+									} else {
+										$builtQuery .= " email='" .
+											Connection::getConnection()
+												->real_escape_string($_POST["newemail"])
+											."'";
+										$execute = true;
+									}
 								}
-							}
-
-							if (isset($_POST["newpassword"]) && isset($_POST["newpasswordre"]) &&
-								!empty($_POST["newpassword"]) && !empty($_POST["newpasswordre"]) &&
-								$_POST["newpassword"] == $_POST["newpasswordre"]) {
-								$builtQuery .= " password='" .
-									password_hash($_POST["newpassword"], PASSWORD_DEFAULT) . "'";
-								$execute = true;
-							} else {
-								View::load("edit-profile", [
-									"user"  => $user["nick"],
-									"email" => $user["email"],
-									"role"  => $user["role"],
-									"error" => "Error en la nueva contraseña."
-								]);
-							}
-
-							$builtQuery .= " WHERE id=" . $_SESSION["id"] . ";";
-
-							if ($execute) {
-								$edited = Connection::getConnection()->query($builtQuery);
-
-								if ($edited) {
+	
+								if (isset($_POST["newpassword"]) && isset($_POST["newpasswordre"]) &&
+									!empty($_POST["newpassword"]) && !empty($_POST["newpasswordre"]) &&
+									$_POST["newpassword"] == $_POST["newpasswordre"]) {
+									$builtQuery .= " password='" .
+										password_hash($_POST["newpassword"], PASSWORD_DEFAULT) . "'";
+									$execute = true;
+								} else {
+									View::load("edit-profile", [
+										"user"  => $user["nick"],
+										"email" => $user["email"],
+										"role"  => $user["role"],
+										"error" => "Error en la nueva contraseña."
+									]);
+								}
+	
+								$builtQuery .= " WHERE id=" . $_SESSION["id"] . ";";
+	
+								if ($execute) {
+									$edited = Connection::getConnection()->query($builtQuery);
+	
+									if ($edited) {
+										header("Location: ../user/profile/" . $user["nick"]);
+										exit;
+									} elseif (!$edited) {
+										View::load("edit-profile", [
+											"user"  => $user["nick"],
+											"email" => $user["email"],
+											"role"  => $user["role"],
+											"error" => "Error desconocido."
+										]);
+									} else {
+										header("Location: ../user/profile/" . $user["nick"]);
+										exit;
+									}
+								} elseif (!isset($imageUploadError)) {
 									header("Location: ../user/profile/" . $user["nick"]);
 									exit;
 								} else {
@@ -100,7 +162,7 @@
 										"user"  => $user["nick"],
 										"email" => $user["email"],
 										"role"  => $user["role"],
-										"error" => "Error desconocido."
+										"error" => "No hay campos que modificar."
 									]);
 								}
 							} else {
@@ -108,7 +170,7 @@
 									"user"  => $user["nick"],
 									"email" => $user["email"],
 									"role"  => $user["role"],
-									"error" => "No hay campos que modificar."
+									"error" => $imageUploadError
 								]);
 							}
 						} else {

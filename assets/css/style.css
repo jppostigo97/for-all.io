@@ -188,7 +188,15 @@ form {
   display: grid;
   grid-template-areas: "u u u e" "a a a a"; }
   #profile #profile-info {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    grid-gap: 1em;
     grid-area: u; }
+    #profile #profile-info .profile-username {
+      align-items: center;
+      display: flex; }
+      #profile #profile-info .profile-username h2 {
+        margin: 0; }
   #profile #edit-profile {
     grid-area: e;
     text-align: right; }
@@ -350,7 +358,7 @@ nav {
 .error {
   background: rgba(220, 20, 60, 0.6);
   border-radius: 8px;
-  margin: 0px 14px;
+  margin: 20px 14px;
   padding: 10px 20px; }
 
 .pointer {
@@ -373,9 +381,14 @@ nav {
       width: fit-content; } }
 
 .profile-pic {
-  border-radius: 50%;
-  height: 64px;
-  width: 64px; }
+  align-items: center;
+  display: flex;
+  height: 96px;
+  width: 96px; }
+  .profile-pic img {
+    border-radius: 50%;
+    height: auto;
+    width: 100%; }
 
 #user-list .fa-check {
   color: #00DD55; }

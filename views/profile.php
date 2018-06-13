@@ -9,11 +9,27 @@
 ?>
 
 <div id="profile">
-	<h2 id="profile-info">
-		[[ username ]]
-		-
-		<small>[[ role ]]</small>
-	</h2>
+
+
+	<div id="profile-info">
+		<?php if (file_exists("assets/img/" . $username . ".jpg")): ?>
+			<div class="profile-pic">
+				<img src="assets/img/<?= $username ?>.jpg" alt="Imagen de perfil" />
+			</div>
+		<?php else: ?>
+			<div class="profile-pic">
+				<img src="assets/img/default_profile_image.png" alt="Imagen de perfil" />
+			</div>
+		<?php endif; ?>
+
+		<div class="profile-username">
+			<h2>
+				[[ username ]]
+				-
+				<small>[[ role ]]</small>
+			</h2>
+		</div>
+	</div>
 
 	<?php if (isset($_SESSION["user"]) && $_SESSION["user"] == $username): ?>
 		<div id="edit-profile">

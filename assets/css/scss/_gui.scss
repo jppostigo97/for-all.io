@@ -171,7 +171,7 @@ nav {
 .error {
 	background: rgba(220, 20, 60, 0.6);
 	border-radius: 8px;
-	margin: 0px 14px;
+	margin: 20px 14px;
 	padding: 10px 20px;
 }
 
@@ -212,9 +212,16 @@ nav {
 }
 
 .profile-pic {
-	border-radius: 50%;
-	height: 64px;
-	width: 64px;
+	align-items: center;
+	display: flex;
+	height: 96px;
+	width: 96px;
+	
+	img {
+		border-radius: 50%;
+		height: auto;
+		width: 100%;
+	}
 }
 
 #user-list {

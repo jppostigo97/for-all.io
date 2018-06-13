@@ -2,10 +2,12 @@
 	<div class="message" ng-repeat="msg in $ctrl.messages">
 		<div class="message-info">
 			<div class="message-author">
-				<img src="assets/img/{{ msg.author }}.jpg" alt="Imagen de perfil"
-					ng-if="msg.profile == 'y'" class="profile-pic" />
-				<img src="assets/img/default_profile_image.png" alt="Imagen de perfil"
-					ng-if="msg.profile == 'n'" class="profile-pic" />
+				<div class="profile-pic">
+					<img src="assets/img/{{ msg.author }}.jpg" alt="Imagen de perfil"
+						ng-if="msg.profile == 'y'" />
+					<img src="assets/img/default_profile_image.png" alt="Imagen de perfil"
+						ng-if="msg.profile == 'n'" />
+				</div>
 				<span><a href="user/profile/{{ msg.author }}">{{ msg.author }}</a></span>
 			</div>
 		</div>
