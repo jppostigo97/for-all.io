@@ -118,14 +118,14 @@
 							$newThread = Connection::getConnection()->query($getLastThreadQuery)->
 								fetch_assoc()["id"];
 
-							$messageContent = Connection::getConnection()->real->
-								escape_string($_POST["message_content"]);
+							$messageContent = Connection::getConnection()->
+								real_escape_string($_POST["message_content"]);
 							// Consulta para crear el mensaje
 							$messageQuery = "INSERT INTO message (thread, content, author) " .
 								"VALUES (" .
 								$newThread
 								. ", '" .
-								$newThread
+								$messageContent
 								. "', " .
 								$_SESSION["id"]
 								. ")";
