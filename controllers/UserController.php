@@ -297,6 +297,11 @@
 
 						if ($registered) {
 
+							$tokenQuery = "SELECT api_token FROM user WHERE email = '${email}';";
+							$token = null;
+
+							if ($token = Connection::getConnection()->query($tokenQuery)) $token = $token->fetch_assoc()["api_token"];
+
 							$emailConfig = [
 								"target"   => $email,
 								"template" => "confirm",
