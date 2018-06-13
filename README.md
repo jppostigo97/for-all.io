@@ -4,3 +4,5 @@ For-All.io es un foro para desarrolladores, programadores y diseñadores, ademá
 ## Datos
 
 ![diagrama entidad relación](er_diagram.jpg)
+
+# W.I.P.
