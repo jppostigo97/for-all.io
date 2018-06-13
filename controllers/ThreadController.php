@@ -81,10 +81,13 @@
 				if (isset($_POST["message_content"]) && !empty($_POST["message_content"])) {
 					if (isset($_POST["thread_id"]) && !empty($_POST["thread_id"])) {
 						// Nuevo mensaje en hilo ya existente
+						$newMessageContent = Connection::getConnection()->
+							real_escape_string($_POST["message_content"]);
+
 						$query = "INSERT INTO message (thread, content, author) VALUES (" .
 							$_POST["thread_id"]
 							. ", '" .
-							$_POST["message_content"]
+							$newMessageContent
 							. "', " .
 							$_SESSION["id"]
 							. ");";
@@ -100,8 +103,11 @@
 					} elseif (isset($_POST["subforum"]) && !empty($_POST["subforum"]) &&
 						isset($_POST["thread_title"]) && !empty($_POST["thread_title"])) {
 						// Nuevo mensaje en nuevo hilo: crear hilo
+						$newThreadTitle = Connection::getConnection()->real_escape_string($_POST["thread_title"]);
+
 						$threadQuery = "INSERT INTO thread (title, creator, subforum) VALUES ('" .
-							$_POST["thread_title"] . "', " . $_SESSION["id"] . ", " . $_POST["subforum"] . ")";
+							$newThreadTitle . "', " . $_SESSION["id"] . ", " .
+							$_POST["subforum"] . ")";
 
 						// Crear el hilo y obtenerlo antes de crear el mensaje
 						if ($newThread = Connection::getConnection()->query($threadQuery)) {
@@ -109,12 +115,17 @@
 							$getLastThreadQuery = "SELECT * FROM thread WHERE creator=" .
 								$_SESSION["id"] . " ORDER BY ID DESC;";
 							// Obtenemos este último hilo
-							$newThread = Connection::getConnection()->query($getLastThreadQuery)->fetch_assoc()["id"];
+							$newThread = Connection::getConnection()->query($getLastThreadQuery)->
+								fetch_assoc()["id"];
+
+							$messageContent = Connection::getConnection()->real->
+								escape_string($_POST["message_content"]);
 							// Consulta para crear el mensaje
-							$messageQuery = "INSERT INTO message (thread, content, author) VALUES (" .
+							$messageQuery = "INSERT INTO message (thread, content, author) " .
+								"VALUES (" .
 								$newThread
 								. ", '" .
-								$_POST["message_content"]
+								$newThread
 								. "', " .
 								$_SESSION["id"]
 								. ")";

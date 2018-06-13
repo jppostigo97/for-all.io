@@ -23,7 +23,8 @@
 			if ($user->num_rows) {
 				Application::$subtitle = "adminPanel";
 				if (isset($_POST["def_role"])) {
-					$q = "UPDATE config SET cvalue='" . $_POST["def_role"] . "' WHERE ckey='def_role';";
+					$newDefRole = Connection::getConnection()->real_escape_string($_POST["def_role"]);
+					$q = "UPDATE config SET cvalue='${newDefRole}' WHERE ckey='def_role';";
 
 					if (Connection::getConnection()->query($q)) {
 						header("Location: ../admin/index");
