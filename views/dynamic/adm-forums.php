@@ -64,12 +64,12 @@
 
 				<div class="form-field">
 					<label for="title">Título</label>
-					<input type="text" name="title" />
+					<input type="text" name="title" required maxlength="255" minlength="5" />
 				</div>
 
 				<div class="form-field">
 					<label for="description">Descripción</label>
-					<input type="text" name="description" />
+					<input type="text" name="description" required maxlength="255" minlength="5" />
 				</div>
 
 				<div>
@@ -99,13 +99,15 @@
 
 				<div class="form-field">
 					<label for="title">Título</label>
-					<input type="text" name="title" ng-model="$ctrl.params.editForum.title" />
+					<input type="text" name="title" ng-model="$ctrl.params.editForum.title"
+						maxlength="255" minlength="5" />
 				</div>
 
 				<div class="form-field">
 					<label for="description">Descripción</label>
 					<input type="text" name="description"
-						ng-model="$ctrl.params.editForum.description" />
+						ng-model="$ctrl.params.editForum.description"
+						maxlength="255" minlength="5" />
 				</div>
 
 				<div>
@@ -137,12 +139,14 @@
 			
 				<div class="form-field">
 					<label for="title">Título</label>
-					<input type="text" name="title" />
+					<input type="text" name="title"
+						maxlength="255" minlength="5" />
 				</div>
 
 				<div class="form-field">
 					<label for="description">Descripción</label>
-					<input type="text" name="description" />
+					<input type="text" name="description"
+						maxlength="255" minlength="5" />
 				</div>
 
 				<div>
@@ -173,13 +177,15 @@
 			
 				<div class="form-field">
 					<label for="title">Título</label>
-					<input type="text" name="title" ng-model="$ctrl.params.editSubforum.title" />
+					<input type="text" name="title" ng-model="$ctrl.params.editSubforum.title"
+						maxlength="255" minlength="5" />
 				</div>
 
 				<div class="form-field">
 					<label for="description">Descripción</label>
 					<input type="text" name="description"
-						ng-model="$ctrl.params.editSubforum.description" />
+						ng-model="$ctrl.params.editSubforum.description"
+						maxlength="255" minlength="5" />
 				</div>
 
 				<div>

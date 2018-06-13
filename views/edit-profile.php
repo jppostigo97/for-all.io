@@ -22,17 +22,17 @@
 
 		<div class="form-field">
 			<label for="newpassword">Nueva contraseña</label>
-			<input type="password" name="newpassword" />
+			<input type="password" name="newpassword" pattern="((?=(.*[a-z|A-Z].*))+(?=(.*(\W|[0-9]).*))+)(.){6,}" />
 		</div>
 
 		<div class="form-field">
 			<label for="newpasswordre">Repite la nueva contraseña</label>
-			<input type="password" name="newpasswordre" />
+			<input type="password" name="newpasswordre" pattern="((?=(.*[a-z|A-Z].*))+(?=(.*(\W|[0-9]).*))+)(.){6,}" />
 		</div>
 
 		<div class="form-field">
 			<label for="password">Contraseña actual</label>
-			<input type="password" name="password" required />
+			<input type="password" name="password" pattern="((?=(.*[a-z|A-Z].*))+(?=(.*(\W|[0-9]).*))+)(.){6,}" required />
 		</div>
 
 		<div>

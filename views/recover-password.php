@@ -9,7 +9,7 @@
 	<form action="user/recover" method="POST">
 		<div class="form-field">
 			<label for="target_email">Email</label>
-			<input type="email" name="target_email" placeholder="email@ejemplo.com" />
+			<input type="email" name="target_email" placeholder="email@ejemplo.com" required />
 		</div>
 		<div>
 			<button type="submit">Recuperar contraseña</button>

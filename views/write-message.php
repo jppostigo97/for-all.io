@@ -25,7 +25,7 @@
 			</div>
 			<div class="form-field">
 				<label for="thread_title">Título</label>
-				<input type="text" name="thread_title" required />
+				<input type="text" name="thread_title" maxlength="255" minlength="5" required />
 			</div>
 
 		<?php endif; ?>

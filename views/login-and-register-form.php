@@ -20,7 +20,7 @@
 		</div>
 		<div class="form-field">
 			<label for="login_password">Contraseña</label>
-			<input type="password" name="login_password" id="login_password" required />
+			<input type="password" name="login_password" id="login_password" pattern="((?=(.*[a-z|A-Z].*))+(?=(.*(\W|[0-9]).*))+)(.){6,}" required />
 		</div>
 		<div>
 			<button type="submit">Entra</button>
@@ -42,13 +42,11 @@
 		</div>
 		<div class="form-field">
 			<label for="reg_password">Contraseña</label>
-			<input type="password" name="reg_password" id="reg_password" required />
-			<!-- <input type="password" name="reg_password" id="reg_password" pattern="((?=(.*[a-z|A-Z].*))+(?=(.*(\W|[0-9]).*))+)(.){6,}" required /> -->
+			<input type="password" name="reg_password" id="reg_password" pattern="((?=(.*[a-z|A-Z].*))+(?=(.*(\W|[0-9]).*))+)(.){6,}" required />
 		</div>
 		<div class="form-field">
 			<label for="reg_repassword">Repite la contraseña</label>
-			<input type="password" name="reg_repassword" id="reg_repassword" required />
-			<!-- <input type="password" name="reg_repassword" id="reg_repassword" pattern="((?=(.*[a-z|A-Z].*))+(?=(.*(\W|[0-9]).*))+)(.){6,}" required /> -->
+			<input type="password" name="reg_repassword" id="reg_repassword" pattern="((?=(.*[a-z|A-Z].*))+(?=(.*(\W|[0-9]).*))+)(.){6,}" required />
 		</div>
 		<div>
 			<button type="submit">Regístrate</button>
