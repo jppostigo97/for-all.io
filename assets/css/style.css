@@ -254,6 +254,7 @@ a {
   cursor: pointer;
   display: inline-block;
   margin: 8px 0px;
+  max-height: 24px;
   padding: 8px 14px;
   transition: .25s linear background; }
   [type="button"]:hover, [type="button"]:active, [type="submit"]:hover, [type="submit"]:active, button:hover, button:active, .btn:hover, .btn:active {
