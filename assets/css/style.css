@@ -247,24 +247,26 @@ a {
     color: inherit; }
 
 [type="button"], [type="submit"], button, .btn {
+  align-items: center;
   background: #CC0077;
   border: 0;
   border-radius: 2px;
   color: #E6E6E6;
   cursor: pointer;
-  display: inline-block;
+  display: flex;
+  height: 36px;
   margin: 8px 0px;
-  padding: 8px 14px;
+  padding: 0px 12px;
+  text-align: center;
+  width: fit-content;
   transition: .25s linear background; }
   [type="button"]:hover, [type="button"]:active, [type="submit"]:hover, [type="submit"]:active, button:hover, button:active, .btn:hover, .btn:active {
     background: #DD1188;
     color: #E6E6E6; }
-  @media screen and (max-width: 960px) {
-    [type="button"], [type="submit"], button, .btn {
-      height: 24px; } }
   @media screen and (max-width: 720px) {
     [type="button"], [type="submit"], button, .btn {
-      font-size: 108%; } }
+      font-size: 108%;
+      height: 40px; } }
 
 input[type="text"], input[type="password"],
 input[type="email"], input[type="date"],
