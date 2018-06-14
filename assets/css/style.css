@@ -259,6 +259,9 @@ a {
   [type="button"]:hover, [type="button"]:active, [type="submit"]:hover, [type="submit"]:active, button:hover, button:active, .btn:hover, .btn:active {
     background: #DD1188;
     color: #E6E6E6; }
+  @media screen and (max-width: 960px) {
+    [type="button"], [type="submit"], button, .btn {
+      height: 24px; } }
   @media screen and (max-width: 720px) {
     [type="button"], [type="submit"], button, .btn {
       font-size: 108%; } }
