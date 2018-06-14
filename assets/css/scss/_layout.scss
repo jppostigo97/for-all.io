@@ -266,6 +266,13 @@ form {
 			}
 		}
 
+		&:nth-child(even) {
+			.message-info {
+				float: right;
+				margin: 0px 0px 12px 24px;
+			}
+		}
+
 		.message-content {
 			text-align: justify;
 		}

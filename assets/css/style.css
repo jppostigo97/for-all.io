@@ -183,6 +183,9 @@ form {
       flex-direction: column; }
       #message-list .message .message-info .message-author img {
         margin-bottom: 8px; }
+  #message-list .message:nth-child(even) .message-info {
+    float: right;
+    margin: 0px 0px 12px 24px; }
   #message-list .message .message-content {
     text-align: justify; }
 
