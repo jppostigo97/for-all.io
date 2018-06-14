@@ -407,11 +407,11 @@
 
 		public function messages($thread, $page = 1) {
 			$t = $thread + 0;
-			$p = (($page - 1) * 2);
+			$p = (($page - 1) * 5);
 
-			$query = "SELECT message.content, message.date_created, user.nick FROM message " .
-				"JOIN user ON message.author=user.id WHERE message.thread=" . $t .
-				" LIMIT " . $p . ", 5;";
+			$query = "SELECT content, date_created, author FROM message " .
+				"WHERE thread=" . $t .
+				" ORDER BY date_created LIMIT " . $p . ", 5;";
 
 			$objects = Connection::getConnection()->query($query);
 			echo Connection::getConnection()->error;
@@ -419,12 +419,25 @@
 				$response = [];
 
 				while ($m = $objects->fetch_assoc()) {
-					$profilePicPath = "assets/img/" . $m["nick"] . ".jpg";
-					$profilePic = (file_exists($profilePicPath))? "y" : "n";
+					$authorQuery = "SELECT nick FROM user WHERE id = ${m['author']};";
+					$author = Connection::getConnection()->query($authorQuery);
+
+					if ($author && $author->num_rows)
+						$m["author"] = $author->fetch_assoc()["nick"];
+					else
+						$m["author"] = null;
+
+					if ($m["author"] != null) {
+						$profilePicPath = "assets/img/" . $m["author"] . ".jpg";
+						$profilePic = (file_exists($profilePicPath))? "y" : "n";
+					} else {
+						$profilePic = "n";
+					}
+					
 					$response[] = [
 						"content" => $m["content"],
 						"date"    => $m["date_created"],
-						"author"  => $m["nick"],
+						"author"  => $m["author"],
 						"profile" => $profilePic
 					];
 				}
