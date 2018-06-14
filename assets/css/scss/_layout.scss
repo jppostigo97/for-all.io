@@ -250,8 +250,10 @@ form {
 		.message-info {
 			display: flex;
 			float: left;
-			justify-content: flex-start;
+			justify-content: center;
 			margin: 0px 24px 12px 0px;
+			max-width: 180px;
+			min-width: 180px;
 
 			.message-author {
 				align-items: center;

@@ -173,8 +173,10 @@ form {
   #message-list .message .message-info {
     display: flex;
     float: left;
-    justify-content: flex-start;
-    margin: 0px 24px 12px 0px; }
+    justify-content: center;
+    margin: 0px 24px 12px 0px;
+    max-width: 180px;
+    min-width: 180px; }
     #message-list .message .message-info .message-author {
       align-items: center;
       display: flex;
