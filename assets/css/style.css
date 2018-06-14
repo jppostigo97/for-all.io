@@ -253,7 +253,7 @@ a {
   border-radius: 2px;
   color: #E6E6E6;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   height: 36px;
   margin: 8px 0px;
   padding: 0px 12px;
