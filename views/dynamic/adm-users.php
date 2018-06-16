@@ -17,9 +17,17 @@
 
 			<tbody>
 				<tr ng-repeat="user in $ctrl.users track by $index" id="user-{{ user.id}}">
-					<td>{{ user.nick }}</td>
+					<td><a href="user/profile/{{ user.nick }}">{{ user.nick }}</a></td>
 					<td>{{ user.email }}</td>
-					<td>{{ user.role }}</td>
+					<td>
+
+						<select ng-model="user.level" ng-change="$ctrl.confirmChangeRole(user)">
+
+							<option ng-repeat="role in $ctrl.roles" value="{{ role.id }}">{{ role.name }}</option>
+
+						</select>
+						
+					</td>
 					<td>{{ user.reg_date | datefilter }}</td>
 					<td>{{ user.last_connection | datefilter }} - {{ user.last_connection | timefilter }}</td>
 					<td>

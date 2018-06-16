@@ -13,6 +13,14 @@ angular.module("forAll.admin")
 				});
 			};
 
+			this.getRoles = () => {
+				$http.get("api/roles").then((response) => {
+					this.roles = response.data;
+				}, (error) => {
+					console.log("Error al recuperar los roles de usuario.");
+				});
+			};
+
 			this.tryBanUser = (user) => {
 				if (user.active == 1) {
 					// Ban
@@ -41,6 +49,30 @@ angular.module("forAll.admin")
 				}
 			};
 
+			this.confirmChangeRole = (user) => {
+				let newRole = {};
+
+				for (let r of this.roles)
+					if (r.id == user.level) newRole = r;
+				
+
+				if (confirm("¿Cambiar el rol de " + user.nick + " a " + newRole.name + "?")) {
+					$http.get("api/change_role/" + user.id + "/" + newRole.id).then((response) => {
+						console.log(response);
+						if (response.data.status == "error") {
+							this.getUsers();
+						} else {
+							alert("Ahora el usuario " + user.nick + " tiene el rol de " + newRole.name);
+						}
+					}, (error) => {
+						console.log("Error al cambiar el rol.");
+					});
+				} else {
+					this.getUsers();
+				}
+			};
+
 			this.getUsers();
+			this.getRoles();
 		}
 	});

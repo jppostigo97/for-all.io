@@ -56,8 +56,8 @@
 		}
 
 		public function users() {
-			$q = "SELECT user.id, user.email, user.nick, user.reg_date, user.last_connection, " .
-				"user.verified, user.active, user_role.name as role " .
+			$q = "SELECT user.id, user.email, user.nick, user.reg_date, user.level, " .
+				"user.last_connection, user.verified, user.active, user_role.name as role " .
 				"FROM user JOIN user_role ON user.level=user_role.id;";
 
 			$users = Connection::getConnection()->query($q);
@@ -70,6 +70,48 @@
 				$result = [
 					"status" => "error",
 					"error"  => "no-users"
+				];
+			}
+
+			self::print_json($result);
+		}
+
+		public function change_role($user, $role) {
+			$checkUserQuery = "SELECT id FROM user WHERE id = ${user};";
+			$checkRoleQuery = "SELECT id FROM user_role WHERE id = ${role};";
+
+			$userCheck = Connection::getConnection()->query($checkUserQuery);
+
+			$result = [];
+
+			if ($userCheck) {
+				$roleCheck = Connection::getConnection()->query($checkRoleQuery);
+
+				if ($roleCheck) {
+					$q = "UPDATE user SET level = ${role} WHERE id = ${user};";
+
+					$updated = Connection::getConnection()->query($q);
+
+					if ($updated) {
+						$result = [
+							"updated" => "ok"
+						];
+					} else {
+						$result = [
+							"status" => "error",
+							"error"  => "cant-change"
+						];
+					}
+				} else {
+					$result = [
+						"status" => "error",
+						"error"  => "no-role"
+					];
+				}
+			} else {
+				$result = [
+					"status" => "error",
+					"error"  => "no-user"
 				];
 			}
 
