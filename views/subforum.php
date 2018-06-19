@@ -49,5 +49,9 @@
 
 			<?php endwhile; ?>
 		</div>
+	<?php else: ?>
+		<div>
+			<h2>No se han encontrado hilos</h2>
+		</div>
 	<?php endif; ?>
 </div>
